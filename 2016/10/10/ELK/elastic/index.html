@@ -1,0 +1,1016 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="elk," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Elasticsearch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Elasticsearch">
+<meta property="og:url" content="http://www.rhel.cc/2016/10/10/ELK/elastic/index.html">
+<meta property="og:site_name" content="Monkey">
+<meta property="og:description" content="Elasticsearch">
+<meta property="og:updated_time" content="2016-11-20T12:35:25.503Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Elasticsearch">
+<meta name="twitter:description" content="Elasticsearch">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.rhel.cc/2016/10/10/ELK/elastic/"/>
+
+
+
+
+
+  <title>Elasticsearch | Monkey</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-69625009-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?1d19ec01ee75454338de4be42f062626";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Monkey</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Think! And Think Again</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'qXreyHC_EX5zr5PLMxgp','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.rhel.cc/2016/10/10/ELK/elastic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="kikiyou">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://7xw819.com1.z0.glb.clouddn.com/RH_CertifiedArchitect_RGB.svg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Monkey">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Elasticsearch</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-10T10:19:44+08:00">
+                2016-10-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/10/10/ELK/elastic/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/10/ELK/elastic/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Elasticsearch"><a href="#Elasticsearch" class="headerlink" title="Elasticsearch"></a>Elasticsearch</h1><a id="more"></a>
+<p>Elasticsearch 2.4.1<br>26MB 小巧好用</p>
+<p>elasticsearch 中索引相当于database<br>数据清除办法<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -XDELETE <span class="string">'http://127.0.0.1:9200/logstash-2013.03.*'</span></div></pre></td></tr></table></figure></p>
+<ul>
+<li><p>Elasticsearch 与 关系型数据库 名称对比</p>
+<p>|关系型数据库|elasticsearch|<br>|———-|:————-:|<br>| database |  index       |<br>| table    |  type        |<br>| row      | document     |<br>| column   | field        |<br>| row      | document     |<br>| schema   | mapping      |<br>| index    | （全部）       |<br>| sql      | query DSL    |</p>
+</li>
+<li><p>elastic 存储数据的路径：</p>
+</li>
+</ul>
+<p>/var/lib/elasticsearch/nodes/0/indices/{nameOfYourIndex}/(0-4}/index</p>
+<ul>
+<li>增加</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">curl -XPOST <span class="string">'http://localhost:9200/index_XX/type_XX/1'</span> <span class="_">-d</span> <span class="string">'&#123;</span></div><div class="line">countent: "大家好"</div><div class="line">user_name: "fox"</div><div class="line">&#125;'</div></pre></td></tr></table></figure>
+<ul>
+<li>删除</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -XDELETE <span class="string">'http://localhost:9200/index_XX/type_XX/1'</span></div></pre></td></tr></table></figure>
+<ul>
+<li>修改</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">curl -XPUT <span class="string">'http://localhost:9200/index_XX/type_XX/1'</span> <span class="_">-d</span> <span class="string">'&#123;</span></div><div class="line">countent: "大家好"</div><div class="line">user_name: "foo"</div><div class="line">&#125;'</div><div class="line"></div><div class="line">POST /inde_XXX/type_XXX/_update     //使用_update字段更新</div><div class="line">&#123;</div><div class="line">  <span class="string">"doc"</span>:&#123;</div><div class="line">    <span class="string">"price"</span>:10</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>查询</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">curl -XGET <span class="string">'http://localhost:9200/index_XX/type_XX/1'</span></div><div class="line"></div><div class="line">  _source 获取字段</div><div class="line">  curl -XGET <span class="string">'http://localhost:9200/_source=uid'</span></div><div class="line"></div><div class="line">GET  _all/_settings  //获取所有索引的设置</div><div class="line">GET  logstash-v5-coins-2016.11.01/_settings  //获取单个索引的设置</div><div class="line">&#123;</div><div class="line">  <span class="string">"logstash-v5-coins-2016.11.01"</span>: &#123;</div><div class="line">    <span class="string">"settings"</span>: &#123;</div><div class="line">      <span class="string">"index"</span>: &#123;</div><div class="line">        <span class="string">"creation_date"</span>: <span class="string">"1477958402595"</span>,</div><div class="line">        <span class="string">"refresh_interval"</span>: <span class="string">"5s"</span>,</div><div class="line">        <span class="string">"number_of_shards"</span>: <span class="string">"5"</span>,   //定义索引的主分片数量 创建索引后不可修改</div><div class="line">        <span class="string">"number_of_replicas"</span>: <span class="string">"1"</span>, //每个主分片的复制分片个数，默认1 可修改</div><div class="line">        <span class="string">"uuid"</span>: <span class="string">"7QwiwQ4KQcmSiLUnALR6ZA"</span>,</div><div class="line">        <span class="string">"version"</span>: &#123;</div><div class="line">          <span class="string">"created"</span>: <span class="string">"2040199"</span></div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>搜索</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div></pre></td><td class="code"><pre><div class="line">全局搜索：</div><div class="line">curl -XGET <span class="string">'http://localhost:9200/_search?q=uid:10002827'</span></div><div class="line"></div><div class="line">简单搜索</div><div class="line">curl -XGET <span class="string">'http://localhost:9200/logstash-v5-equipment-2016.10.25/v5-equipment/_search?q=uid:10002827'</span></div><div class="line"></div><div class="line">* TERM - 关键词</div><div class="line">curl -XGET <span class="string">"http://localhost:9200/_search"</span> <span class="_">-d</span><span class="string">'&#123;</span></div><div class="line">  "query": &#123;</div><div class="line">    "term": &#123;</div><div class="line">      "user": "fox"</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;'</div><div class="line"></div><div class="line">* TEXT</div><div class="line">&#123;</div><div class="line">  <span class="string">"query"</span>: &#123;</div><div class="line">    <span class="string">"text"</span>: &#123;</div><div class="line">      <span class="string">"countent"</span>: <span class="string">"这样那样"</span> //会自动分割成term 这样 样那 那样</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">* RANGE</div><div class="line">// 查看一个范围</div><div class="line">&#123;</div><div class="line">  <span class="string">"query"</span> :&#123;</div><div class="line">    <span class="string">"range"</span> :&#123;</div><div class="line">      <span class="string">"age"</span>:&#123;</div><div class="line">        <span class="string">"from"</span> : 10,</div><div class="line">        <span class="string">"to"</span> : 20,</div><div class="line">        <span class="string">"include_lower"</span>: <span class="literal">true</span>,</div><div class="line">        <span class="string">"include_upper"</span>:<span class="literal">false</span>,</div><div class="line">        <span class="string">"boost"</span> :2.0</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125; </div><div class="line"></div><div class="line">* QUERY_STRING</div><div class="line">&#123;</div><div class="line">  <span class="string">"query"</span>:&#123;</div><div class="line">    <span class="string">"query_string"</span>:&#123;</div><div class="line">      <span class="string">"query"</span>:<span class="string">" 这样 AND 那样 OR 怎样"</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">* WILDCARD - 通配符</div><div class="line">&#123;</div><div class="line">  <span class="string">"query"</span>:&#123;</div><div class="line">    <span class="string">"wildcard"</span>:&#123;<span class="string">"user"</span> : <span class="string">"ki*y"</span>&#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">* MLT(more like this)</div><div class="line">&#123;</div><div class="line">  <span class="string">"query"</span>:&#123;</div><div class="line">    <span class="string">"more_like_this"</span>:&#123;</div><div class="line">      <span class="string">"like_text"</span>: <span class="string">"这样那样"</span>,</div><div class="line">      <span class="string">"min_term_freq"</span>: 1,   //关键词出现的频率</div><div class="line">      <span class="string">"max_query_term"</span>: 12 </div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">*  FACETS - 切面</div><div class="line"></div><div class="line">  + aggregation 聚合</div><div class="line">  + SELECT SUM(salary) GROUP BY name FROM employee;</div><div class="line"></div><div class="line">facets  支持以下,就像sql group中支持 sum max 等</div><div class="line">  + range</div><div class="line">  + term status   //统计term出现的次数</div><div class="line">  + geo distance</div><div class="line">  + statistical //统计上的平均值 最大 最小</div><div class="line">  + date histogram //时间分片</div><div class="line"></div><div class="line"></div><div class="line">//查询频率最高的</div><div class="line">&#123;</div><div class="line">  <span class="string">"query"</span>:&#123;</div><div class="line">    <span class="string">"match_all"</span>:&#123;&#125;</div><div class="line">  &#125;,</div><div class="line">  <span class="string">"facets"</span>:&#123;  //分组 相当于sql 中group</div><div class="line">    <span class="string">"bpmf"</span>:&#123;  //组名</div><div class="line">      <span class="string">"terms"</span>:&#123;</div><div class="line">        <span class="string">"field"</span> : <span class="string">"bopomofo"</span></div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">// 查询频率最高的内容</div><div class="line">&#123;</div><div class="line">  <span class="string">"query"</span>:&#123;</div><div class="line">    <span class="string">"match_all"</span>:&#123;&#125;</div><div class="line">  &#125;,</div><div class="line">  <span class="string">"facets"</span>:&#123;</div><div class="line">    <span class="string">"top"</span>:&#123;</div><div class="line">      <span class="string">"terms"</span>:&#123;</div><div class="line">        <span class="string">"filed"</span>: <span class="string">"countent"</span>,<span class="string">"size"</span>: 100 // 前一百笔</div><div class="line">              &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li><p>组合查询</p>
+<ul>
+<li>bool查询<ul>
+<li>must,should,must_not   与/或/非</li>
+<li>minimum_should_match: 表示一个文档至少匹配多少个短语才算时匹配</li>
+<li>disable_coord: 启用和禁用一个文档中包含所有查询关键词的分数得分计算,默认是false</li>
+</ul>
+</li>
+<li>boosting查询<ul>
+<li>positive部分：查询返回的查询结果分值不变</li>
+<li>negative部分：查询的结果分值会被降低</li>
+<li>negative_boost部分：设置negative中要降低的分值</li>
+</ul>
+</li>
+<li>constant_score查询 <ul>
+<li>优点：可以让一个查询得到一个恒定的分值</li>
+</ul>
+</li>
+<li>indices查询 -&gt; 在多个索引里面查询<ul>
+<li>no_match_query 查询其他索引里的数据</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Filter 过滤 （有cache）</p>
+<ul>
+<li>filter 查询语句</li>
+<li>cache 缓存<br>开启方式:在filter查询语句后面加”_cache”:true<br>注意：<br>Script filters,Geo-filters,Date ranges 这样的过滤方式开启cache无意义<br>exits,missing,range,term和terms查询是默认开启cache的</li>
+</ul>
+</li>
+<li><p>bulk 批量操作<br>{action:{metadata}}\n<br>{request body}\n<br>{action:{metadata}}\n<br>{request body}\n<br>…</p>
+</li>
+</ul>
+<p>例:{“delete”:{“_index”:”library”,”_type”:”books”,”_id”:”1”}}</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:right">action(行为)</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">create</td>
+<td>当文件不存在时创建之。</td>
+</tr>
+<tr>
+<td style="text-align:right">index</td>
+<td>创建新文档或替换已有文档</td>
+</tr>
+<tr>
+<td style="text-align:right">update</td>
+<td>局部更新文档</td>
+</tr>
+<tr>
+<td style="text-align:right">delete</td>
+<td>删除一个文档</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>Elasticsearch 版本控制version  –》 锁  –》 悲观锁/乐观锁</p>
+<ul>
+<li>内部版本控制：_version自增长,修改数据后，_version会自动加1</li>
+<li>外部版本控制：为了保持_version与外部版本控制的数值一致，使用version_type=external,<pre><code>检查数据当前的version值 是否小于请求中的version值 
+</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">PUT  twitter/books/1</div><div class="line">&#123;</div><div class="line">  <span class="string">"title"</span>:<span class="string">"eeeeeeeeee title eeeeeeeeeeeee"</span>,</div><div class="line">  <span class="string">"name"</span>:&#123;</div><div class="line">    <span class="string">"first"</span>:<span class="string">"Zachary"</span>,</div><div class="line">    <span class="string">"last"</span>:<span class="string">"Tong"</span></div><div class="line">  &#125;,</div><div class="line">  <span class="string">"publish_data"</span>:<span class="string">"2015-02-06"</span>,</div><div class="line">  <span class="string">"price"</span>:<span class="string">"59.99"</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">get twitter/books/1</div><div class="line"></div><div class="line">post /twitter/books/1/_update?version=333  //内部版本控制，指定外部版号为333， 会提示冲突</div><div class="line">&#123;</div><div class="line">  <span class="string">"doc"</span>:&#123;</div><div class="line">    <span class="string">"price"</span>:11</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">外部版本控制机制,指定的version=5 大于当前版本就ok</div><div class="line">version 由外部提供</div><div class="line">PUT /twitter/books/1?version=5&amp;version_type=external</div><div class="line">&#123;</div><div class="line">  <span class="string">"title"</span>:<span class="string">"ttttt 3333 ttt"</span>,</div><div class="line">  <span class="string">"name"</span>:&#123;</div><div class="line">    <span class="string">"first"</span>:<span class="string">"cccc"</span>,</div><div class="line">    <span class="string">"last"</span>:<span class="string">"Tang"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>cluster</p>
+<ul>
+<li>auto-discovery</li>
+<li>auto-elected master</li>
+<li>data replication / partition<ul>
+<li>with flexible shard /replica setting</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>shard  相当于 mysql 中 partition<br>是介于 database 和 document之间  ，一个database 包括多个shard</p>
+<ul>
+<li>more shard <ul>
+<li>faster indexing / scaling</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>replica 相当于 mysql的 duplication</p>
+<ul>
+<li>faster searching / failover</li>
+</ul>
+</li>
+<li><p>stats api</p>
+</li>
+</ul>
+<p><a href="http://www.elasticsearch.org/guide/reference/api/admin-cluster-nodes-stats" target="_blank" rel="external">stats api文档</a></p>
+<ul>
+<li>取得各项数据</li>
+<li>文件数、搜索次数、累计搜索时数、累计建索引时间<ul>
+<li>cluster/primary/node/index 各种级别</li>
+</ul>
+</li>
+<li>JVM CPU/Heap / OS /Thread /transport 使用状态</li>
+</ul>
+<p>参考：<br><a href="http://bit.ly/112xtsk" target="_blank" rel="external">Cool Bonsai Cool - An introduction to ElasticSearch</a><br><a href="http://bit.ly/ZqBBUt" target="_blank" rel="external">The Road to a Distributed Search Engine</a><br><a href="http://bit.ly/11tmbyK" target="_blank" rel="external">elasticsearch, Big Data, Search &amp; Analytics</a></p>
+<ul>
+<li>数据备份</li>
+</ul>
+<p>使用elasticdump<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">导出：</div><div class="line">具体data配置信息</div><div class="line">elasticdump --ignore-errors=<span class="literal">true</span>  --scrollTime=120m  --bulk=<span class="literal">true</span> --input=http://xxxxx:9200/.kibana   --output=data.json  --type=data</div><div class="line">导出mapping信息</div><div class="line">elasticdump --ignore-errors=<span class="literal">true</span>  --scrollTime=120m  --bulk=<span class="literal">true</span> --input=http://xxxxxx/.kibana   --output=mapping.json  --type=mapping  </div><div class="line"></div><div class="line">导入：</div><div class="line"></div><div class="line">导入mapping</div><div class="line">elasticdump --input=mapping.json  --output=http://xxxxxxx:9000/.kibana --type=mapping</div><div class="line"></div><div class="line">导入具体的kibana配置信息</div><div class="line">elasticdump --input=data.json  --output=http://xxxxx:9000/.kibana --type=data</div></pre></td></tr></table></figure></p>
+<p>参考：<br><a href="https://my.oschina.net/secisland/blog/614127" target="_blank" rel="external">Elasticsearch 2.20入门篇：聚合操作</a><br><a href="http://techlog.cn/article/list/10182851" target="_blank" rel="external">Elasticsearch 的聚合查询及过滤</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/elk/" rel="tag"># elk</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/10/ELK/elk_小demo的配置/" rel="next" title="elk 简单配置">
+                <i class="fa fa-chevron-left"></i> elk 简单配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/30/process_vs_thread/" rel="prev" title="进程线程的区别(threading 源码学习)">
+                进程线程的区别(threading 源码学习) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/10/10/ELK/elastic/"
+           data-title="Elasticsearch" data-url="http://www.rhel.cc/2016/10/10/ELK/elastic/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xw819.com1.z0.glb.clouddn.com/RH_CertifiedArchitect_RGB.svg"
+               alt="kikiyou" />
+          <p class="site-author-name" itemprop="name">kikiyou</p>
+           
+              <p class="site-description motion-element" itemprop="description">越努力越幸运</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">204</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yewang15215" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.quora.com/profile/King-Yip-3" target="_blank" title="Quora">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Quora
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/wutongyip" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.douban.com/people/yewang15215/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.guokr.com/i/0121652172/" target="_blank" title="果壳">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  果壳
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/hellokingyip" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/KingYip15215" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/kingyip15215" target="_blank" title="新浪微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  新浪微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/sindresorhus/awesome" title="Awesome" target="_blank">Awesome</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Elasticsearch"><span class="nav-number">1.</span> <span class="nav-text">Elasticsearch</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kikiyou</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"liveandlearn"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

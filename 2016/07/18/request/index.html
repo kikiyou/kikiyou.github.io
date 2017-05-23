@@ -1,0 +1,1011 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="python," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="request 学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="requests">
+<meta property="og:url" content="http://www.rhel.cc/2016/07/18/request/index.html">
+<meta property="og:site_name" content="Monkey">
+<meta property="og:description" content="request 学习笔记">
+<meta property="og:updated_time" content="2016-11-20T12:35:25.506Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="requests">
+<meta name="twitter:description" content="request 学习笔记">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.rhel.cc/2016/07/18/request/"/>
+
+
+
+
+
+  <title>requests | Monkey</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-69625009-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?1d19ec01ee75454338de4be42f062626";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Monkey</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Think! And Think Again</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'qXreyHC_EX5zr5PLMxgp','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.rhel.cc/2016/07/18/request/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="kikiyou">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://7xw819.com1.z0.glb.clouddn.com/RH_CertifiedArchitect_RGB.svg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Monkey">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">requests</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-18T16:10:02+08:00">
+                2016-07-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/07/18/request/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/18/request/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="request-学习笔记"><a href="#request-学习笔记" class="headerlink" title="request 学习笔记"></a>request 学习笔记</h2><a id="more"></a>
+<ul>
+<li><p>python distribution<br>from distutils.core import setup</p>
+<ol>
+<li>创建同模块名的目录</li>
+<li>创建setup.py </li>
+<li>build 打包<br>$python setup sdist</li>
+<li>安装 python setup install<br>  会自动把模块按照的python 默认环境中</li>
+<li>使用时 如下<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">(1) 只要把你所要打包的module的py文件放到目录下，书写相应的setup.py,</div><div class="line">（2）执行python setup.py sdist  打包</div><div class="line">（3）扔到对应机器上 解包</div><div class="line">（4）python setup.py build  </div><div class="line">（5）sudo python setup.py install</div><div class="line"> 【同安装第三方模块步骤】</div></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p>测试</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">test_requests.py</div><div class="line">    import unittest</div></pre></td></tr></table></figure>
+</li>
+<li><p>request.get</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">    	def __setattr__(self, name, value):</div><div class="line">            if (name == &apos;method&apos;) and (value):</div><div class="line">                if not value in self._METHODS:</div><div class="line">                    raise InvalidMethod()</div><div class="line">            </div><div class="line">            object.__setattr__(self, name, value)</div><div class="line"></div><div class="line">        ## 调用对象 可以很方便的给对象的属性赋值</div><div class="line">        ## 特殊的属性 只接受 指定的值</div><div class="line"></div><div class="line">+ urllib2.urlopen</div><div class="line"></div><div class="line"></div><div class="line">+ StringIO  </div><div class="line">    因为StringIO 的操作方式和 file的api很像，所以可以使用StringIO作为文件的  buffer 到一定量之后一次写入</div><div class="line">    示例： https://pymotw.com/2/StringIO/</div><div class="line">    ``` python</div><div class="line">    # Find the best implementation available on this platform</div><div class="line">    try:</div><div class="line">        from cStringIO import StringIO</div><div class="line">    except:</div><div class="line">        from StringIO import StringIO</div><div class="line"></div><div class="line">    # Writing to a buffer</div><div class="line">    output = StringIO()</div><div class="line">    output.write(&apos;This goes into the buffer. &apos;)</div><div class="line">    print &gt;&gt;output, &apos;And so does this.&apos;</div><div class="line"></div><div class="line">    # Retrieve the value written</div><div class="line">    print output.getvalue()</div><div class="line"></div><div class="line">    output.close() # discard buffer memory</div><div class="line"></div><div class="line">    # Initialize a read buffer</div><div class="line">    input = StringIO(&apos;Inital value for read buffer&apos;)</div><div class="line"></div><div class="line">    # Read from the buffer</div><div class="line">    print input.read()</div></pre></td></tr></table></figure>
+</li>
+<li><p>文件上传</p>
+<p>  Python中使用POST方式上传文件 ： (<a href="http://oldj.net/article/python-upload-file-via-form-post/" target="_blank" rel="external">http://oldj.net/article/python-upload-file-via-form-post/</a>)</p>
+<p>  使用 python的 poster模块</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"># test_client.py</div><div class="line">from poster.encode import multipart_encode</div><div class="line">from poster.streaminghttp import register_openers</div><div class="line">import urllib2</div><div class="line"></div><div class="line"># 在 urllib2 上注册 http 流处理句柄</div><div class="line">register_openers()</div><div class="line"></div><div class="line"># 开始对文件 &quot;DSC0001.jpg&quot; 的 multiart/form-data 编码</div><div class="line"># &quot;image1&quot; 是参数的名字，一般通过 HTML 中的 &lt;input&gt; 标签的 name 参数设置</div><div class="line"></div><div class="line"># headers 包含必须的 Content-Type 和 Content-Length</div><div class="line"># datagen 是一个生成器对象，返回编码过后的参数</div><div class="line">datagen, headers = multipart_encode(&#123;&quot;image1&quot;: open(&quot;DSC0001.jpg&quot;, &quot;rb&quot;)&#125;)</div><div class="line"></div><div class="line"># 创建请求对象</div><div class="line">request = urllib2.Request(&quot;http://localhost:5000/upload_image&quot;, datagen, headers)</div><div class="line"># 实际执行请求并取得返回</div><div class="line">print urllib2.urlopen(request).read()</div></pre></td></tr></table></figure>
+</li>
+<li><p>Python——eventlet 绿色线程<br>  <a href="http://www.cnblogs.com/Security-Darren/p/4170031.html" target="_blank" rel="external">eventlet</a></p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">try:</div><div class="line">    from eventlet.green import urllib2</div><div class="line">except ImportError:</div><div class="line">    import urllib2</div></pre></td></tr></table></figure>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">import urllib</div><div class="line">import urllib2</div><div class="line"></div><div class="line">try:</div><div class="line">    from gevent import monkey </div><div class="line">    monkey.patch_all()</div><div class="line">except ImportError:</div><div class="line">    pass</div></pre></td></tr></table></figure>
+</li>
+<li><p>猴子补丁<br>  属性在运行时的动态替换，叫做猴子补丁。<br>  eventlet中大量使用了 猴子补丁，对标准函数进行绿化</p>
+</li>
+<li><p>gevent、eventlet twisted  非阻塞网络库<br>  基于协程的网络库gevent、eventl</p>
+</li>
+<li><p>request的作者认为 eventlet 性能高于 gevent</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">import urllib</div><div class="line">import urllib2</div><div class="line"></div><div class="line">try:</div><div class="line">	import eventlet</div><div class="line">	eventlet.monkey_patch()</div><div class="line">except ImportError:</div><div class="line">	pass</div><div class="line"></div><div class="line">if not &apos;eventlet&apos; in locals():</div><div class="line">	try:</div><div class="line">		from gevent import monkey </div><div class="line">		monkey.patch_all()</div><div class="line">	except ImportError:</div><div class="line">		pass</div></pre></td></tr></table></figure>
+</li>
+<li><p>urllib2 中 urlopen() 被 opener.open() 代替</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">def urlopen(url, data=None, timeout=socket._GLOBAL_DEFAULT_TIMEOUT,</div><div class="line">        cafile=None, capath=None, cadefault=False, context=None):</div><div class="line">    return opener.open(url, data, timeout)</div></pre></td></tr></table></figure>
+</li>
+<li><p>git管理<br>  三个主干</p>
+<ol>
+<li>release</li>
+<li>devlop</li>
+<li>feature<br> feature/multiart-encode<br> feature/cookiejar</li>
+</ol>
+</li>
+<li><p>归纳</p>
+<ol>
+<li>core.py</li>
+<li><p>def get()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">   r = Request()</div><div class="line"></div><div class="line">r.method = &apos;GET&apos;</div><div class="line">r.url = url</div><div class="line">r.params = params</div><div class="line">r.headers = headers</div><div class="line">r.cookiejar = cookies</div><div class="line">r.auth = _detect_auth(url, auth)</div><div class="line"></div><div class="line">r.send()</div><div class="line"></div><div class="line">return r.response</div></pre></td></tr></table></figure>
+</li>
+<li><p>class Request(object):<br> def <strong>init</strong>(self):<br> def <strong>setattr</strong>(self, name, value):<br> def _get_opener(self):</p>
+<pre><code>    opener = urllib2.build_opener(*_handlers)
+return opener.open
+</code></pre><p> def send():</p>
+<pre><code>opener = self._get_opener()
+resp = opener(req)
+self._build_response(resp)
+</code></pre><p>新加一个方法 就要添加一个单元测试用例</p>
+</li>
+</ol>
+</li>
+<li><p>python包导入  相对导入与绝对导入<br>  在python 2.x中启用 绝对导入<br>  from <strong>future</strong> import absolute_import</p>
+</li>
+</ul>
+<p><a href="http://zhuhaipeng.me/blog/2014/08/26/pythondao-ru-de-lu-jing-,jue-dui-dao-ru-,xiang-dui-dao-ru/" target="_blank" rel="external">参考</a></p>
+<ul>
+<li><p>使用tox测试代码的兼容性<br><a href="https://mozillazg.com/2014/07/python-use-tox-test-code.html" target="_blank" rel="external">tox</a></p>
+</li>
+<li><p>让python 记住自己的版本</p>
+<p>  from core import <strong>version</strong></p>
+</li>
+</ul>
+<p><a href="http://blog.theerrorlog.com/making-python-programs-remember-their-versions.html" target="_blank" rel="external">参考</a></p>
+<ul>
+<li><p>Safer error response handling. </p>
+<h2 id="self-response-status-code-resp-code"><a href="#self-response-status-code-resp-code" class="headerlink" title="  self.response.status_code = resp.code"></a>  self.response.status_code = resp.code</h2><p>  self.response.status_code = getattr(resp, ‘code’, None)</p>
+</li>
+<li><p>request.async.get() 的实现<br>  创建 async.py<br>  先引入async 再import  从core 引入get<br>  这时就可以 实现异步sync的get<br>  –&gt;request –&gt;async.py –&gt;import urllib –&gt;monkey_patch urllib –&gt;core.py –&gt;get()</p>
+</li>
+<li><p>小技巧  方便传值</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(url, params=&#123;&#125;, headers=&#123;&#125;, cookies=None, auth=None)</span>:</span></div><div class="line">    <span class="keyword">return</span> request(<span class="string">'GET'</span>, url, params=params, headers=headers, cookiejar=cookies,</div><div class="line">                    auth=_detect_auth(url, auth))</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">request</span><span class="params">(method, url, **kwargs)</span>:</span></div><div class="line">    r = Request(method=method, url=url, data=data, headers=kwargs.pop(<span class="string">'headers'</span>, &#123;&#125;),</div><div class="line">                cookiejar=kwargs.pop(<span class="string">'cookies'</span>, <span class="keyword">None</span>), files=kwargs.pop(<span class="string">'files'</span>, <span class="keyword">None</span>),</div><div class="line">                auth=_detect_auth(url, kwargs.pop(<span class="string">'auth'</span>, <span class="keyword">None</span>)))</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Request</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, url=None, headers=dict<span class="params">()</span>, files=None, method=None,</span></span></div><div class="line">                 data=dict<span class="params">()</span>, auth=None, cookiejar=None):</div><div class="line">        self.url = url</div><div class="line">        self.headers = headers</div><div class="line">        self.files = files</div><div class="line">        self.method = method</div></pre></td></tr></table></figure>
+</li>
+<li><p>urllib2.urlparse 模块<br>  （1） urlparse.urlsplit 把url 分成5部分，并返回元组</p>
+<pre><code>&gt;scheme
+&gt;netloc
+&gt;path
+&gt;query
+&gt;fragment
+
+url=urlparse.urlsplit(&apos;http://www.baidu.com/index.php?username=guol&apos;)
+SplitResult(scheme=&apos;http&apos;, netloc=&apos;www.baidu.com&apos;, path=&apos;/index.php&apos;, query=&apos;username=guol&apos;, fragment=&apos;&apos;)
+</code></pre><p>  （2） urlparse.urlunsplit 和urlsplit相反 生成 url </p>
+<p>  （3） urlparse.urljoin 组合生成url   确保基地址是依/ 结尾</p>
+<pre><code>&gt;&gt;&gt; import urlparse
+&gt;&gt;&gt; urlparse.urljoin(&apos;http://www.oschina.com/tieba&apos;,&apos;index.php&apos;)
+&apos;http://www.oschina.com/index.php&apos;
+&gt;&gt;&gt; urlparse.urljoin(&apos;http://www.oschina.com/tieba/&apos;,&apos;index.php&apos;)
+&apos;http://www.oschina.com/tieba/index.php&apos;
+</code></pre></li>
+<li><p>or 操作符</p>
+<p>  In [25]: path = ‘’ or ‘/‘<br>  In [26]: path<br>  Out[26]: ‘/‘</p>
+<p>  In [27]: path = ‘xx’ or ‘/‘<br>  In [28]: path<br>  Out[28]: ‘xx’</p>
+</li>
+<li><p>@staticmethod和@classmethod的作用与区别</p>
+</li>
+</ul>
+<p>一般来说，要使用某个类的方法，需要先实例化一个对象再调用方法。<br>而使用@staticmethod或@classmethod，就可以不需要实例化，直接类名.方法名()来调用。</p>
+<pre><code>- @staticmethod不需要表示自身对象的self和自身类的cls参数，就跟使用函数一样。
+- @classmethod也不需要self参数，但第一个参数需要是表示自身类的cls参数。
+</code></pre><p>class A(object):<br>    bar = 1<br>    def foo(self):<br>        print ‘foo’</p>
+<pre><code>@staticmethod
+def static_foo():
+    print &apos;static_foo&apos;
+    print A.bar
+
+@classmethod
+def class_foo(cls):
+    print &apos;class_foo&apos;
+    print cls.bar
+    cls().foo()
+</code></pre><p>A.static_foo()<br>A.class_foo()</p>
+<ul>
+<li><p>class 只被初始化一次</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">class AuthManager(object):</div><div class="line">    &quot;&quot;&quot;Authentication Manager.&quot;&quot;&quot;</div><div class="line">    </div><div class="line">    def __new__(cls):</div><div class="line">        singleton = cls.__dict__.get(&apos;__singleton__&apos;)</div><div class="line">        if singleton is not None:</div><div class="line">            return singleton</div><div class="line"></div><div class="line">        cls.__singleton__ = singleton = object.__new__(cls)</div><div class="line"></div><div class="line">        return singleton</div><div class="line"></div><div class="line"></div><div class="line">    def __init__(self):</div><div class="line">        self.passwd = &#123;&#125;</div><div class="line">        self._auth = &#123;&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>替换 isinstance 为 hasattr<br>把 </p>
+<pre><code>if isinstance(data, dict):
+    self.data = urllib.urlencode(data)
+else:
+    self.data = data
+</code></pre></li>
+</ul>
+<p>换成</p>
+<pre><code>if hasattr(data, &apos;items&apos;):
+    self.data = urllib.urlencode(data)
+else:
+    self.data = data
+</code></pre>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/18/yml_python/" rel="next" title="yml与python格式之间的转换">
+                <i class="fa fa-chevron-left"></i> yml与python格式之间的转换
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/18/redis/" rel="prev" title="redis">
+                redis <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/07/18/request/"
+           data-title="requests" data-url="http://www.rhel.cc/2016/07/18/request/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xw819.com1.z0.glb.clouddn.com/RH_CertifiedArchitect_RGB.svg"
+               alt="kikiyou" />
+          <p class="site-author-name" itemprop="name">kikiyou</p>
+           
+              <p class="site-description motion-element" itemprop="description">越努力越幸运</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">204</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yewang15215" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.quora.com/profile/King-Yip-3" target="_blank" title="Quora">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Quora
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/wutongyip" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.douban.com/people/yewang15215/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.guokr.com/i/0121652172/" target="_blank" title="果壳">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  果壳
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/hellokingyip" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/KingYip15215" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/kingyip15215" target="_blank" title="新浪微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  新浪微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/sindresorhus/awesome" title="Awesome" target="_blank">Awesome</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#request-学习笔记"><span class="nav-number">1.</span> <span class="nav-text">request 学习笔记</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#self-response-status-code-resp-code"><span class="nav-number">2.</span> <span class="nav-text">  self.response.status_code = resp.code</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kikiyou</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"liveandlearn"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

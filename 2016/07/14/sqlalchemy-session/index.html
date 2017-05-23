@@ -1,0 +1,907 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="#sqlalchemy session管理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sqlalchemy_session">
+<meta property="og:url" content="http://www.rhel.cc/2016/07/14/sqlalchemy-session/index.html">
+<meta property="og:site_name" content="Monkey">
+<meta property="og:description" content="#sqlalchemy session管理">
+<meta property="og:updated_time" content="2016-11-20T12:35:25.508Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="sqlalchemy_session">
+<meta name="twitter:description" content="#sqlalchemy session管理">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.rhel.cc/2016/07/14/sqlalchemy-session/"/>
+
+
+
+
+
+  <title>sqlalchemy_session | Monkey</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-69625009-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?1d19ec01ee75454338de4be42f062626";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Monkey</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Think! And Think Again</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'qXreyHC_EX5zr5PLMxgp','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.rhel.cc/2016/07/14/sqlalchemy-session/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="kikiyou">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://7xw819.com1.z0.glb.clouddn.com/RH_CertifiedArchitect_RGB.svg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Monkey">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">sqlalchemy_session</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-14T17:34:47+08:00">
+                2016-07-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/07/14/sqlalchemy-session/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/14/sqlalchemy-session/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>#sqlalchemy session管理<br><a id="more"></a></p>
+<h2 id="session基础用法"><a href="#session基础用法" class="headerlink" title="session基础用法"></a>session基础用法</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> create_engine</div><div class="line"><span class="keyword">from</span> sqlalchemy.orm <span class="keyword">import</span> sessionmaker</div><div class="line"></div><div class="line"><span class="comment"># an Engine, which the Session will use for connection</span></div><div class="line"><span class="comment"># resources</span></div><div class="line">some_engine = create_engine(<span class="string">'mysql://root:1234@localhost/test'</span>)</div><div class="line"></div><div class="line"><span class="comment"># create a configured "Session" class</span></div><div class="line">Session = sessionmaker(bind=some_engine)</div><div class="line"></div><div class="line"><span class="comment"># create a Session</span></div><div class="line">session = Session()</div><div class="line"></div><div class="line"><span class="comment"># work with sess</span></div><div class="line">result = session.execute(<span class="string">'show variables'</span>)</div><div class="line"><span class="keyword">for</span> row <span class="keyword">in</span> result:</div><div class="line">    <span class="keyword">print</span> row</div></pre></td></tr></table></figure>
+<h3 id="sessionmaker-应该放在哪里？"><a href="#sessionmaker-应该放在哪里？" class="headerlink" title="sessionmaker 应该放在哪里？"></a>sessionmaker 应该放在哪里？</h3><ul>
+<li>如果程序启动的时候知道连接到哪个数据库，就把sessionmaker 放在 <code>__init__.py</code>中，在别的模块中 from mypackage import Session 这样引用</li>
+<li>如果程序启动的时候不知道要去连接哪个数据库，可以使用 sessionmaker.configure()</li>
+</ul>
+<h2 id="推荐的session-用法"><a href="#推荐的session-用法" class="headerlink" title="推荐的session 用法"></a>推荐的session 用法</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> contextlib <span class="keyword">import</span> contextmanager</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ThingOne</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">go</span><span class="params">(self, session)</span>:</span></div><div class="line">        session.query(FooBar).update(&#123;<span class="string">"x"</span>: <span class="number">5</span>&#125;)</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ThingTwo</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">go</span><span class="params">(self, session)</span>:</span></div><div class="line">        session.query(Widget).update(&#123;<span class="string">"q"</span>: <span class="number">18</span>&#125;)</div><div class="line"><span class="meta">@contextmanager</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">session_scope</span><span class="params">()</span>:</span></div><div class="line">    <span class="string">"""Provide a transactional scope around a series of operations."""</span></div><div class="line">    session = Session()</div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        <span class="keyword">yield</span> session</div><div class="line">        session.commit()</div><div class="line">    <span class="keyword">except</span>:</div><div class="line">        session.rollback()</div><div class="line">        <span class="keyword">raise</span></div><div class="line">    <span class="keyword">finally</span>:</div><div class="line">        session.close()</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run_my_program</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">with</span> session_scope() <span class="keyword">as</span> session:</div><div class="line">        ThingOne().go(session)</div><div class="line">        ThingTwo().go(session)</div></pre></td></tr></table></figure>
+<h2 id="Thread-Local模式-——-生命周期与-request-同步"><a href="#Thread-Local模式-——-生命周期与-request-同步" class="headerlink" title="Thread-Local模式 —— 生命周期与 request 同步"></a>Thread-Local模式 —— 生命周期与 request 同步</h2><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">Web Server          Web Framework        SQLAlchemy ORM Code</div><div class="line">--------------      --------------       ------------------------------</div><div class="line">startup        -&gt;   Web framework        # Session registry is established</div><div class="line">                    initializes          Session = scoped_session(sessionmaker())</div><div class="line"></div><div class="line">incoming</div><div class="line">web request    -&gt;   web request     -&gt;   # The registry is *optionally*</div><div class="line">                    starts               # called upon explicitly to create</div><div class="line">                                         # a Session local to the thread and/or request</div><div class="line">                                         Session()</div><div class="line"></div><div class="line">                                         # the Session registry can otherwise</div><div class="line">                                         # be used at any time, creating the</div><div class="line">                                         # request-local Session() if not present,</div><div class="line">                                         # or returning the existing one</div><div class="line">                                         Session.query(MyClass) # ...</div><div class="line"></div><div class="line">                                         Session.add(some_object) # ...</div><div class="line"></div><div class="line">                                         # if data was modified, commit the</div><div class="line">                                         # transaction</div><div class="line">                                         Session.commit()</div><div class="line"></div><div class="line">                    web request ends  -&gt; # the registry is instructed to</div><div class="line">                                         # remove the Session</div><div class="line">                                         Session.remove()</div><div class="line"></div><div class="line">                    sends output      &lt;-</div><div class="line">outgoing web    &lt;-</div><div class="line">response</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@app.before_request</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">init_session</span><span class="params">()</span>:</span></div><div class="line">    g.session = Session()</div><div class="line"></div><div class="line"><span class="meta">@app.tear_down_request</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">close_session</span><span class="params">()</span>:</span></div><div class="line">    g.session.close()</div></pre></td></tr></table></figure>
+<p>这其实才是最适合 web 项目的 session 管理方式。（伪代码中没有写 commit 和 rollback，可自行添加）这样即避免了连接池的过快消耗，又避免了并发问题。<br>这也是 SQLAlchemy 文档中推荐的做法。<br>绑定request 请求前申请session  request之后释放session</p>
+<p>实践上更靠谱的一段代码可能是：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> my_web_framework <span class="keyword">import</span> get_current_request, on_request_end</div><div class="line"><span class="keyword">from</span> sqlalchemy.orm <span class="keyword">import</span> scoped_session, sessionmaker</div><div class="line"></div><div class="line">Session = scoped_session(sessionmaker(bind=some_engine), scopefunc=get_current_request)</div><div class="line"></div><div class="line"><span class="meta">@on_request_end</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">remove_session</span><span class="params">(req)</span>:</span></div><div class="line">    Session.remove()</div></pre></td></tr></table></figure></p>
+<p>Flask-SqlAlchemy就是用上面的方法实现的</p>
+<h2 id="sqlalchemy-session-总结"><a href="#sqlalchemy-session-总结" class="headerlink" title="sqlalchemy session 总结"></a>sqlalchemy session 总结</h2><ul>
+<li><strong>sqlalchemy会把一个表对象 附加给一个session ,如果这个session不close，别的session无法使用这个对象</strong></li>
+</ul>
+<p>会报错：<br>User 对象已经附加给session 6 ,当前是 session 7 ,无法操作User<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">InvalidRequestError: Object <span class="string">'&lt;User at 0x7f1e8fede090&gt;'</span> <span class="keyword">is</span> already attached to session <span class="string">'6'</span> (this <span class="keyword">is</span> <span class="string">'7'</span>)</div></pre></td></tr></table></figure></p>
+<ul>
+<li><p>session的close() 只是释放对表的控制权,并不是断开连接(connect)，所以close() 之后依然可以执行查询</p>
+</li>
+<li><p>使用scoped_session() 之后获得的session，如果不执行session.remove(),所获得的session都是同一个session</p>
+</li>
+<li><p>session.remove() 并不会，执行close()，所以正常的顺序应该是</p>
+<ol>
+<li>session = scoped_session(session_factory)</li>
+<li>s1 = session()</li>
+<li>s1.add(jessica)</li>
+<li>s1.commit()</li>
+<li>s1.close()</li>
+<li>session.remove()</li>
+</ol>
+</li>
+<li>因为如果没有执行 session.remove() 不需要执行 s1.close()，<br>应为同一个 session不需要释放，就可以提交。</li>
+</ul>
+<p>如下 示例验证了上面的说法<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> Column, String, Integer, ForeignKey</div><div class="line"><span class="keyword">from</span> sqlalchemy.ext.declarative <span class="keyword">import</span> declarative_base</div><div class="line"></div><div class="line">Base = declarative_base()</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span><span class="params">(Base)</span>:</span></div><div class="line">    __tablename__ = <span class="string">'user'</span></div><div class="line">    id = Column(Integer, primary_key=<span class="keyword">True</span>)</div><div class="line">    name = Column(String)</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> create_engine</div><div class="line">engine = create_engine(<span class="string">'sqlite:///test.db'</span>)</div><div class="line"></div><div class="line"><span class="keyword">from</span> sqlalchemy.orm <span class="keyword">import</span> sessionmaker</div><div class="line">session = sessionmaker()</div><div class="line">session.configure(bind=engine)</div><div class="line">Base.metadata.create_all(engine)</div><div class="line"></div><div class="line"><span class="comment"># Construct the first session object</span></div><div class="line">s1 = session()</div><div class="line"><span class="comment"># Construct the second session object</span></div><div class="line">s2 = session()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>s1 <span class="keyword">is</span> s2</div><div class="line"><span class="keyword">False</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>jessica = User(name=<span class="string">'Jessica'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>s1.add(jessica)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>s2.add(jessica)</div><div class="line">Traceback (most recent call last):</div><div class="line">......</div><div class="line">sqlalchemy.exc.InvalidRequestError: Object <span class="string">'User at'</span> <span class="keyword">is</span> already attached to session <span class="string">'1'</span> (this <span class="keyword">is</span> <span class="string">'2'</span>)</div><div class="line"></div><div class="line"><span class="comment">##################</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>session_factory = sessionmaker(bind=engine)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>session = scoped_session(session_factory)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>s1 = session()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>s2 = session()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>jessica = User(name=<span class="string">'Jessica'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>s1.add(jessica)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>s2.add(jessica)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>s1 <span class="keyword">is</span> s2</div><div class="line"><span class="keyword">True</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>s1.commit()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>s2.query(User).filter(User.name == <span class="string">'Jessica'</span>).one()</div></pre></td></tr></table></figure></p>
+<p>参考：<br><a href="http://my.oschina.net/lionets/blog/407263" target="_blank" rel="external">http://my.oschina.net/lionets/blog/407263</a></p>
+<p><a href="http://docs.sqlalchemy.org/en/latest/orm/session_basics.html" target="_blank" rel="external">http://docs.sqlalchemy.org/en/latest/orm/session_basics.html</a></p>
+<ul>
+<li>普通session 和 使用 scoped_session的区别 <a href="http://pythoncentral.io/understanding-python-sqlalchemy-session/" target="_blank" rel="external">传送门</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/14/context/" rel="next" title="contextmanager">
+                <i class="fa fa-chevron-left"></i> contextmanager
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/18/request_auth/" rel="prev" title="request认证的支持">
+                request认证的支持 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/07/14/sqlalchemy-session/"
+           data-title="sqlalchemy_session" data-url="http://www.rhel.cc/2016/07/14/sqlalchemy-session/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xw819.com1.z0.glb.clouddn.com/RH_CertifiedArchitect_RGB.svg"
+               alt="kikiyou" />
+          <p class="site-author-name" itemprop="name">kikiyou</p>
+           
+              <p class="site-description motion-element" itemprop="description">越努力越幸运</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">204</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yewang15215" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.quora.com/profile/King-Yip-3" target="_blank" title="Quora">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Quora
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/wutongyip" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.douban.com/people/yewang15215/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.guokr.com/i/0121652172/" target="_blank" title="果壳">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  果壳
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/hellokingyip" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/KingYip15215" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/kingyip15215" target="_blank" title="新浪微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  新浪微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/sindresorhus/awesome" title="Awesome" target="_blank">Awesome</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#session基础用法"><span class="nav-number">1.</span> <span class="nav-text">session基础用法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sessionmaker-应该放在哪里？"><span class="nav-number">1.1.</span> <span class="nav-text">sessionmaker 应该放在哪里？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推荐的session-用法"><span class="nav-number">2.</span> <span class="nav-text">推荐的session 用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Thread-Local模式-——-生命周期与-request-同步"><span class="nav-number">3.</span> <span class="nav-text">Thread-Local模式 —— 生命周期与 request 同步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sqlalchemy-session-总结"><span class="nav-number">4.</span> <span class="nav-text">sqlalchemy session 总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kikiyou</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"liveandlearn"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

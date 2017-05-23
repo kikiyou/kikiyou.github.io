@@ -1,0 +1,978 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="zabbix 已添加监控  清单
+所有主机 基础监控
+主机运行时间查看方式：  最新数据 –&amp;gt;  General –&amp;gt; System uptime
+
+CPU 占用率查看方式：  最新数据 –&amp;gt;  CPU –&amp;gt; CPU idle time计算方法:CPU 占用率 = 100% - %idle 
+
+
+CPU监控的相关指标还有如下：CPU user timeCPU system">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Monkey">
+<meta property="og:url" content="http://www.rhel.cc/2017/05/23/zabbix/监控已完成清单_v0.0.1/index.html">
+<meta property="og:site_name" content="Monkey">
+<meta property="og:description" content="zabbix 已添加监控  清单
+所有主机 基础监控
+主机运行时间查看方式：  最新数据 –&amp;gt;  General –&amp;gt; System uptime
+
+CPU 占用率查看方式：  最新数据 –&amp;gt;  CPU –&amp;gt; CPU idle time计算方法:CPU 占用率 = 100% - %idle 
+
+
+CPU监控的相关指标还有如下：CPU user timeCPU system">
+<meta property="og:updated_time" content="2017-05-11T02:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Monkey">
+<meta name="twitter:description" content="zabbix 已添加监控  清单
+所有主机 基础监控
+主机运行时间查看方式：  最新数据 –&amp;gt;  General –&amp;gt; System uptime
+
+CPU 占用率查看方式：  最新数据 –&amp;gt;  CPU –&amp;gt; CPU idle time计算方法:CPU 占用率 = 100% - %idle 
+
+
+CPU监控的相关指标还有如下：CPU user timeCPU system">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.rhel.cc/2017/05/23/zabbix/监控已完成清单_v0.0.1/"/>
+
+
+
+
+
+  <title> | Monkey</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-69625009-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?1d19ec01ee75454338de4be42f062626";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Monkey</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Think! And Think Again</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'qXreyHC_EX5zr5PLMxgp','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.rhel.cc/2017/05/23/zabbix/监控已完成清单_v0.0.1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="kikiyou">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://7xw819.com1.z0.glb.clouddn.com/RH_CertifiedArchitect_RGB.svg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Monkey">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-23T11:27:27+08:00">
+                2017-05-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/05/23/zabbix/监控已完成清单_v0.0.1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/23/zabbix/监控已完成清单_v0.0.1/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>zabbix 已添加监控  清单</p>
+<h2 id="所有主机-基础监控"><a href="#所有主机-基础监控" class="headerlink" title="所有主机 基础监控"></a>所有主机 基础监控</h2><ul>
+<li><p>主机运行时间<br>查看方式：  最新数据 –&gt;  General –&gt; System uptime</p>
+</li>
+<li><p>CPU 占用率<br>查看方式：  最新数据 –&gt;  CPU –&gt; CPU idle time<br>计算方法:<br>CPU 占用率 = 100% - %idle </p>
+</li>
+</ul>
+<p>CPU监控的相关指标还有如下：<br>CPU user time<br>CPU system time<br>CPU steal time<br>CPU softirq time<br>CPU nice time<br>CPU iowait time<br>CPU interrupt time</p>
+<ul>
+<li>cpu 负载情况<br>1分钟 5分钟 15分钟 平均每核cpu负载情况 （注：小于5正常）</li>
+</ul>
+<p>查看方式： 最新数据 –&gt;  CPU –&gt;<br>Processor load (1 min average per core)<br>Processor load (5 min average per core)<br>Processor load (15 min average per core)    </p>
+<ul>
+<li>cpu 单核占用率<br>查看方式： 最新数据 –&gt;  CPU Core –&gt; CPU Core XX idle time</li>
+</ul>
+<p>计算方法:<br>CPU 占用率 = 100% - %idle </p>
+<ul>
+<li>内存占用相关参数<br>查看方式： 最新数据 –&gt;  Memory –&gt; </li>
+</ul>
+<p>总内存： Total memory<br>可用内存： Available memory<br>注：Available memory=free+buffers+cached</p>
+<ul>
+<li><p>swap相关<br>查看方式： 最新数据 –&gt;  Memory –&gt;<br>总swap大小：Total swap space<br>剩余swap占比：Free swap space in %<br>剩余swap大小：Free swap space</p>
+</li>
+<li><p>系统磁盘容量相关<br>查看方式： 最新数据 –&gt;  Filesystems –&gt;<br>总磁盘大小:Total disk space on /<br>已经使用磁盘大小：Used disk space on /<br>剩余磁盘大小:Free disk space on /</p>
+</li>
+</ul>
+<p>系统磁盘剩余容量占用率：Free disk space on / (percentage)<br>系统磁盘剩余inodes占用率：Free inodes on / (percentage）</p>
+<p>注：每个磁盘有个inodes数，就是可创建文件数量的限制<br>可以使用df -i查看</p>
+<ul>
+<li><p>系统盘软raid监控<br>查看方式： 最新数据 –&gt;  Filesystems –&gt; fsv_系统盘软raid监控    </p>
+</li>
+<li><p>磁盘健康状态<br>查看方式： 最新数据 –&gt;  iostat –&gt; sdX 磁盘健康状态<br>zabbix自动: smartctl -H /dev/sdX 检查磁盘状态</p>
+</li>
+<li><p>磁盘读写速率<br>查看方式： 最新数据  –&gt;  iostat<br>磁盘每秒读MB：sdz rMB/s<br>磁盘每秒写MB：sdz wMB/s    </p>
+</li>
+<li><p>磁盘每秒 IO 数<br>查看方式： 最新数据 –&gt;  iostat –&gt; tps</p>
+</li>
+<li><p>磁盘使用率<br>查看方式： 最新数据 –&gt;  iostat –&gt; %util</p>
+</li>
+</ul>
+<p>注： 磁盘io还可监控如下，单模板中默认停止，如想监控请 启用。<br>svctm<br>w/s<br>wrqm/s<br>rrqm/s<br>avgrq-sz<br>avgqu-sz<br>await<br>r/s</p>
+<ul>
+<li>网卡流量监控<br>查看方式： 最新数据  –&gt;  Network interfaces  –&gt;<br>出网卡流量:Outgoing network traffic on ethX<br>进网卡流量:Incoming network traffic on ethX</li>
+</ul>
+<p>所有网卡（除boundX）总出网卡流量:Outgoing network traffic on all<br>所有网卡（除boundX）总进网卡流量:Incoming network traffic on all</p>
+<ul>
+<li><p>CORE 文件个数<br>查看方式： 最新数据  –&gt;  OS  –&gt; core 文件数量</p>
+</li>
+<li><p>时间同步状态<br>开启：模板 Template OS Linux  –&gt;  触发器 –&gt; “时间误差 大于60秒告警，当前是 {ITEM.VALUE}” 后 </p>
+</li>
+</ul>
+<p>和zabbix server 时间误差大于60秒 的会自动报警</p>
+<ul>
+<li>自动发现主机正在运行服务的tcp侦听端口，然后自动监控所有相关服务状态<br>查看方式： 最新数据  –&gt;  Tcp listen  –&gt; 端口XXX 正在运行</li>
+</ul>
+<h2 id="各个网元检查"><a href="#各个网元检查" class="headerlink" title="各个网元检查"></a>各个网元检查</h2><h3 id="ss-相关"><a href="#ss-相关" class="headerlink" title="ss 相关"></a>ss 相关</h3><p>查看方式： 最新数据  –&gt;  ss  –&gt;</p>
+<p>ss状态：fsv_ss<br>ss在线人数：fsv_ss current_online_sessions<br>ss ha状态：fsv_ss ha status<br>ss直播人数：fsv_ss live_online_sessions<br>ss运行时间：fsv_ss uptime<br>ss直播乱序数量：ss 直播 乱序 监控<br>ss直播断流数量：ss 直播 断流 监控<br>fsv_ss 的 数据盘检查    </p>
+<p>注：    如下监控，已经添加但默认被停止，如果需要请启用<br>vod_online_sessions<br>tvod_online_sessions<br>pull_online_sessions<br>tstv_online_sessions<br>current_pem_load<br>current_hem_load<br>current_hls_load</p>
+<h2 id="sync同步监控"><a href="#sync同步监控" class="headerlink" title="sync同步监控"></a>sync同步监控</h2><ol>
+<li>监控lsyncd</li>
+<li>监控rsync</li>
+</ol>
+<h2 id="cmm主备监控"><a href="#cmm主备监控" class="headerlink" title="cmm主备监控"></a>cmm主备监控</h2><p>查看方式： 最新数据  –&gt;  cmm  –&gt;</p>
+<p>##rss 连接数监控<br>   （1）ESTAB 连接数<br>   （2）LAST-ACK 连接数</p>
+<p>##aaa 相关<br>查看方式： 最新数据  –&gt;  aaa  –&gt;<br>aaa ping<br>aaa的haproxy监控<br>aaa的keepalived </p>
+<p>##epg 主机<br>查看方式： 最新数据  –&gt;  epg  –&gt;</p>
+<ol>
+<li>epg 运行状态 监控</li>
+</ol>
+<p>比如：每分钟<br>curl -v “<a href="http://10.23.255.3:6600/epg/index.html" target="_blank" rel="external">http://10.23.255.3:6600/epg/index.html</a>“<br>判断状态码是否为200</p>
+<ol>
+<li>epg 在线用户数监控</li>
+</ol>
+<p>##交换机监控<br>交换机运行时间：System uptime<br>交换机名字：Host name<br>交换机硬件信息<br>交换机各接口的  进流量和出流量</p>
+<h2 id="mysql监控"><a href="#mysql监控" class="headerlink" title="mysql监控"></a>mysql监控</h2><ol>
+<li>mysql主从监控</li>
+<li>mysql同步超时监控</li>
+<li>其他mysql查询性能监控<br> MySQL version<br> MySQL uptime<br> MySQL update operations per second<br> MySQL status<br> MySQL slow queries<br> MySQL select operations per second<br> MySQL rollback operations per second<br> MySQL queries per second<br> MySQL insert operations per second<br> MySQL delete operations per second<br> MySQL commit operations per second<br> MySQL bytes sent per second<br> MySQL bytes received per second<br> MySQL begin operations per second<br> mysql 当前连接数</li>
+</ol>
+<p>网元状态监控：</p>
+<ol>
+<li>aaa 状态那里  添加 aaa.ping[6600]</li>
+<li>cms 状态那里  添加 cms.ping[6600]</li>
+<li>epg 状态那里  添加 epg.ping[6601]</li>
+<li>nginx 状态那里  添加 nginx.ping[81]</li>
+<li>oss 状态那里  添加 oss.ping[81]</li>
+</ol>
+<p>ss core 监控</p>
+<p>tcp状态监控：<br>tcp 所有状态6060端口监控<br>tcp 所有状态6600端口监控<br>tcp closed状态 监控<br>tcp established状态 监控<br>tcp fin-wait-1状态 监控<br>tcp fin-wait-2状态 监控<br>tcp last-ack状态 监控<br>tcp syn-recv状态 监控<br>tcp syn-send状态 监控<br>tcp time-wait状态 监控 </p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/23/Kubernetes/Kubernetes/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/23/zabbix/华为交换机监控/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/05/23/zabbix/监控已完成清单_v0.0.1/"
+           data-title="" data-url="http://www.rhel.cc/2017/05/23/zabbix/监控已完成清单_v0.0.1/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xw819.com1.z0.glb.clouddn.com/RH_CertifiedArchitect_RGB.svg"
+               alt="kikiyou" />
+          <p class="site-author-name" itemprop="name">kikiyou</p>
+           
+              <p class="site-description motion-element" itemprop="description">越努力越幸运</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">204</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yewang15215" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.quora.com/profile/King-Yip-3" target="_blank" title="Quora">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Quora
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/wutongyip" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.douban.com/people/yewang15215/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.guokr.com/i/0121652172/" target="_blank" title="果壳">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  果壳
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/hellokingyip" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/KingYip15215" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/kingyip15215" target="_blank" title="新浪微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  新浪微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/sindresorhus/awesome" title="Awesome" target="_blank">Awesome</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#所有主机-基础监控"><span class="nav-number">1.</span> <span class="nav-text">所有主机 基础监控</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#各个网元检查"><span class="nav-number">2.</span> <span class="nav-text">各个网元检查</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ss-相关"><span class="nav-number">2.1.</span> <span class="nav-text">ss 相关</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sync同步监控"><span class="nav-number">3.</span> <span class="nav-text">sync同步监控</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cmm主备监控"><span class="nav-number">4.</span> <span class="nav-text">cmm主备监控</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql监控"><span class="nav-number">5.</span> <span class="nav-text">mysql监控</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kikiyou</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"liveandlearn"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

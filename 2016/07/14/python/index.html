@@ -1,0 +1,944 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="python," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="python学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python学习">
+<meta property="og:url" content="http://www.rhel.cc/2016/07/14/python/index.html">
+<meta property="og:site_name" content="Monkey">
+<meta property="og:description" content="python学习">
+<meta property="og:updated_time" content="2016-11-20T12:35:25.506Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python学习">
+<meta name="twitter:description" content="python学习">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.rhel.cc/2016/07/14/python/"/>
+
+
+
+
+
+  <title>python学习 | Monkey</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-69625009-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?1d19ec01ee75454338de4be42f062626";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Monkey</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Think! And Think Again</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'qXreyHC_EX5zr5PLMxgp','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.rhel.cc/2016/07/14/python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="kikiyou">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://7xw819.com1.z0.glb.clouddn.com/RH_CertifiedArchitect_RGB.svg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Monkey">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">python学习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-14T10:19:44+08:00">
+                2016-07-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/07/14/python/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/14/python/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="python学习"><a href="#python学习" class="headerlink" title="python学习"></a>python学习</h3><a id="more"></a>
+<p>python debug 工具<br>    pdb<br>    (<a href="https://docs.python.org/2/library/pdb.html" target="_blank" rel="external">https://docs.python.org/2/library/pdb.html</a>)</p>
+<p><a href="https://www.zhihu.com/question/20501628" target="_blank" rel="external">常用的标准库</a></p>
+<p>vs code 直接输出python<br><a href="http://stackoverflow.com/questions/29987840/how-to-execute-python-code-from-within-visual-studio-code" target="_blank" rel="external">http://stackoverflow.com/questions/29987840/how-to-execute-python-code-from-within-visual-studio-code</a></p>
+<ul>
+<li><p>python 默认就有 <strong>setattr</strong> 和 <strong>getattr</strong>方法<br>可以方便的对属性赋值  而不用写set 和 get 方法</p>
+</li>
+<li><p>动态添加属性 和 方法</p>
+<ol>
+<li>属性<br>obj.a = 1或setattr(obj, ‘a’, 1)</li>
+<li><p>方法<br> class A(object):<br>   pass</p>
+<p> a = A(object)<br>(1) a.hello = types.MethodType(a, hello)<br>(2) 方法二  如下</p>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">class Student(object):</div><div class="line">    pass</div><div class="line">s = Student()</div><div class="line">def hello():</div><div class="line">    print &quot;hello word!!!&quot;</div><div class="line"></div><div class="line">s.hello = hello</div><div class="line">s.hello()</div></pre></td></tr></table></figure>
+</code></pre></li>
+</ol>
+</li>
+</ul>
+<ol>
+<li>@property  把方法变成属性</li>
+</ol>
+<ul>
+<li><p>python 中闭包的实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">def addx(x):</div><div class="line">  return lambda y: x + y</div><div class="line"></div><div class="line">add8 = addx(8)</div><div class="line">add9 = addx(9)</div><div class="line"></div><div class="line">print add8(100)</div><div class="line">print add9(100)</div><div class="line"></div><div class="line">闭包的作用</div><div class="line"></div><div class="line">加强模块化</div></pre></td></tr></table></figure>
+</li>
+<li><p>locals() 和 globals()<br>局部命名空间 和 全局命名空间</p>
+<p>python中namespace只是一个字典，它的键字就是变量名，字典的值就是那些变量的值。</p>
+<p>locals 是只读的，globals 不是</p>
+</li>
+</ul>
+<p>例 4.10. locals 介绍</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>def foo(arg):<br>…     x = 1<br>…     print locals()<br>…<br>foo(7)<br>{‘arg’: 7, ‘x’: 1}<br>foo(‘bar’)    </p>
+<h2 id="‘arg’-‘bar’-‘x’-1"><a href="#‘arg’-‘bar’-‘x’-1" class="headerlink" title="{‘arg’: ‘bar’, ‘x’: 1}"></a>{‘arg’: ‘bar’, ‘x’: 1}</h2><p>globals 介绍</p>
+<p>#!/bin/bash</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>if <strong>name</strong> == “<strong>main</strong>“:<br>    for k, v in globals().items(): </p>
+<pre><code>print k, &quot;=&quot;, v
+</code></pre><hr>
+<p>✗ python 1.py<br><strong>builtins</strong> = <module '__builtin__'="" (built-in)=""><br><strong>name</strong> = <strong>main</strong><br><strong>file</strong> = 1.py<br><strong>doc</strong> = None<br><strong>package</strong> = None</module></p>
+<p>参考 <a href="http://www.chinesepython.org/pythonfoundry/limodoupydoc/dive/html/dialect_locals.html" target="_blank" rel="external">locals 和 globals</a></p>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
+<ul>
+<li>functools 模块<br>functools 模块中有三个主要的函数 partial(), update_wrapper() 和 wraps()。<br><a href="http://blog.jkey.lu/2013/03/15/python-decorator-and-functools-module/" target="_blank" rel="external">参考</a></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">wraps(wrapped[, assigned][, updated])</div><div class="line">wraps() 函数把用 partial() 把 update_wrapper() 给封装了一下。</div><div class="line">貌似是方便加注释的</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">wraps</span><span class="params">(wrapped,</span></span></div><div class="line">          assigned = WRAPPER_ASSIGNMENTS,</div><div class="line">          updated = WRAPPER_UPDATES):</div><div class="line"></div><div class="line">    <span class="keyword">return</span> partial(update_wrapper, wrapped=wrapped,</div><div class="line">                   assigned=assigned, updated=updated)</div><div class="line"></div><div class="line">好，接下来看一下是如何使用的，这才恍然大悟，一直在很多开源项目的代码中看到如下使用。</div><div class="line"></div><div class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> wraps</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_decorator</span><span class="params">(f)</span>:</span></div><div class="line"><span class="meta">     @wraps(f)</span></div><div class="line">     <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwds)</span>:</span></div><div class="line">         <span class="keyword">print</span> <span class="string">'Calling decorated function'</span></div><div class="line">         <span class="keyword">return</span> f(*args, **kwds)</div><div class="line">     <span class="keyword">return</span> wrapper</div><div class="line"></div><div class="line"><span class="meta">@my_decorator</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">example</span><span class="params">()</span>:</span></div><div class="line">    <span class="string">"""这里是文档注释"""</span></div><div class="line">    <span class="keyword">print</span> <span class="string">'Called example function'</span></div><div class="line"></div><div class="line">example()</div><div class="line"></div><div class="line"><span class="comment"># 下面是输出</span></div><div class="line"><span class="string">"""</span></div><div class="line">Calling decorated function</div><div class="line">Called example function</div><div class="line">"""</div><div class="line"><span class="keyword">print</span> example.__name__ <span class="comment"># 'example'</span></div><div class="line"><span class="keyword">print</span> example.__doc__ <span class="comment"># '这里是文档注释'</span></div><div class="line">`</div></pre></td></tr></table></figure>
+<p>=======</p>
+<ul>
+<li><p>python  dict() 函数<br>可以很方便的 把list 转换为字典<br>比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">list = [(key,value),(key1,value1)]</div><div class="line">dict = dict(list)</div><div class="line">&gt; dict</div><div class="line">&#123;key:value,key1:value1&#125;</div><div class="line"></div><div class="line">+ 交互的输入密码</div><div class="line">import getpass</div><div class="line">getpass.getpass()</div><div class="line"></div><div class="line">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</div><div class="line"></div><div class="line">+ dir()  </div><div class="line"> 获取模块中的  获得模块的属性列表</div><div class="line">  flask 中用它，获取配置信息</div><div class="line">=======</div><div class="line">+ python 没有switch的解决办法</div><div class="line">http://www.pydanny.com/why-doesnt-python-have-switch-case.html</div><div class="line"></div><div class="line">+ del 命令的使用</div><div class="line"></div><div class="line">有时候，我们import 一个模块的组件，并不想再后面继续引用可以如下；</div><div class="line"></div><div class="line">``` python</div><div class="line">import thread </div><div class="line"></div><div class="line">_start_new_thread = thread.start_new_thread</div><div class="line">_allocate_lock = thread.allocate_lock</div><div class="line">_get_ident = thread.get_ident</div><div class="line">ThreadError = thread.error</div><div class="line">del thread</div></pre></td></tr></table></figure>
+</li>
+<li><p>StringIO 和 BytesIO<br>在内存中操作字符串的读写</p>
+<ul>
+<li>import json</li>
+</ul>
+</li>
+</ul>
+<p>参数 indent=4，使输出更加优雅</p>
+<p>data1 = {‘b’:789,’c’:456,’a’:123}<br>d1 = json.dumps(data1,sort_keys=True,indent=4)<br>print d1</p>
+<p>输出：</p>
+<p>{<br>    “a”: 123,<br>    “b”: 789,<br>    “c”: 456<br>}</p>
+<ul>
+<li>在python中dict中使用 iteritems<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/python</span></div><div class="line"></div><div class="line">d=&#123;<span class="number">1</span>:<span class="string">'one'</span>,<span class="number">2</span>:<span class="string">'two'</span>,<span class="number">3</span>:<span class="string">'three'</span>&#125;</div><div class="line"><span class="keyword">print</span> <span class="string">'d.items():'</span></div><div class="line"><span class="keyword">for</span> k,v <span class="keyword">in</span> d.items():</div><div class="line">   <span class="keyword">if</span> d[k] <span class="keyword">is</span> v: <span class="keyword">print</span> <span class="string">'\tthey are the same object'</span> </div><div class="line">   <span class="keyword">else</span>: <span class="keyword">print</span> <span class="string">'\tthey are different'</span></div><div class="line"></div><div class="line"><span class="keyword">print</span> <span class="string">'d.iteritems():'</span>   </div><div class="line"><span class="keyword">for</span> k,v <span class="keyword">in</span> d.iteritems():</div><div class="line">   <span class="keyword">if</span> d[k] <span class="keyword">is</span> v: <span class="keyword">print</span> <span class="string">'\tthey are the same object'</span> </div><div class="line">   <span class="keyword">else</span>: <span class="keyword">print</span> <span class="string">'\tthey are different'</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong><em> 输出: </em></strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">d.items():</div><div class="line">    they are the same object</div><div class="line">    they are the same object</div><div class="line">    they are the same object</div><div class="line">d.iteritems():</div><div class="line">    they are the same object</div><div class="line">    they are the same object</div><div class="line">    they are the same object</div></pre></td></tr></table></figure></p>
+<p>虽然结果是一样的 但是 iteritems 迭代器,不是一次性返回数组，性能更高资源更省</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/14/pygraphviz/" rel="next" title="pygraphviz-画出程序调用栈图">
+                <i class="fa fa-chevron-left"></i> pygraphviz-画出程序调用栈图
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/14/program_think/" rel="prev" title="编程基础">
+                编程基础 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/07/14/python/"
+           data-title="python学习" data-url="http://www.rhel.cc/2016/07/14/python/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xw819.com1.z0.glb.clouddn.com/RH_CertifiedArchitect_RGB.svg"
+               alt="kikiyou" />
+          <p class="site-author-name" itemprop="name">kikiyou</p>
+           
+              <p class="site-description motion-element" itemprop="description">越努力越幸运</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">204</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yewang15215" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.quora.com/profile/King-Yip-3" target="_blank" title="Quora">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Quora
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/wutongyip" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.douban.com/people/yewang15215/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.guokr.com/i/0121652172/" target="_blank" title="果壳">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  果壳
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/hellokingyip" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/KingYip15215" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/kingyip15215" target="_blank" title="新浪微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  新浪微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/sindresorhus/awesome" title="Awesome" target="_blank">Awesome</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#python学习"><span class="nav-number">1.</span> <span class="nav-text">python学习</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#‘arg’-‘bar’-‘x’-1"><span class="nav-number"></span> <span class="nav-text">{‘arg’: ‘bar’, ‘x’: 1}</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kikiyou</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"liveandlearn"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

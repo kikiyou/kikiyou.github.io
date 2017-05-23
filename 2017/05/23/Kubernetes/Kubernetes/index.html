@@ -1,0 +1,877 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="k8s 介绍启动一个单节点的集群启动etcd集群1234567891011docker run -d --name=etcd \    --net=host \    gcr.io/google_containers/etcd:2.2.1 \    /usr/local/bin/etcd \    --listen-client-urls=http://0.0.0.0:4001 \    --ad">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Monkey">
+<meta property="og:url" content="http://www.rhel.cc/2017/05/23/Kubernetes/Kubernetes/index.html">
+<meta property="og:site_name" content="Monkey">
+<meta property="og:description" content="k8s 介绍启动一个单节点的集群启动etcd集群1234567891011docker run -d --name=etcd \    --net=host \    gcr.io/google_containers/etcd:2.2.1 \    /usr/local/bin/etcd \    --listen-client-urls=http://0.0.0.0:4001 \    --ad">
+<meta property="og:updated_time" content="2017-05-23T02:46:07.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Monkey">
+<meta name="twitter:description" content="k8s 介绍启动一个单节点的集群启动etcd集群1234567891011docker run -d --name=etcd \    --net=host \    gcr.io/google_containers/etcd:2.2.1 \    /usr/local/bin/etcd \    --listen-client-urls=http://0.0.0.0:4001 \    --ad">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.rhel.cc/2017/05/23/Kubernetes/Kubernetes/"/>
+
+
+
+
+
+  <title> | Monkey</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-69625009-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?1d19ec01ee75454338de4be42f062626";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Monkey</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Think! And Think Again</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'qXreyHC_EX5zr5PLMxgp','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.rhel.cc/2017/05/23/Kubernetes/Kubernetes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="kikiyou">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://7xw819.com1.z0.glb.clouddn.com/RH_CertifiedArchitect_RGB.svg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Monkey">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-23T10:46:07+08:00">
+                2017-05-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/05/23/Kubernetes/Kubernetes/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/23/Kubernetes/Kubernetes/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="k8s-介绍"><a href="#k8s-介绍" class="headerlink" title="k8s 介绍"></a>k8s 介绍</h2><h1 id="启动一个单节点的集群"><a href="#启动一个单节点的集群" class="headerlink" title="启动一个单节点的集群"></a>启动一个单节点的集群</h1><h2 id="启动etcd集群"><a href="#启动etcd集群" class="headerlink" title="启动etcd集群"></a>启动etcd集群</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">docker run -d --name=etcd \</div><div class="line">    --net=host \</div><div class="line">    gcr.io/google_containers/etcd:2.2.1 \</div><div class="line">    /usr/local/bin/etcd \</div><div class="line">    --listen-client-urls=http://0.0.0.0:4001 \</div><div class="line">    --advertise-client-urls=http://0.0.0.0:4001 \</div><div class="line">    --data-dir=/var/etcd/data</div><div class="line"></div><div class="line">这条命令，启动一个 单节点etcd集群 侦听4001端口</div><div class="line">--net=host 意思是这个容器 共享同一个网络名字叫host</div><div class="line">生产环境上，推荐你启动三个节点的etcd集群 保证可用性</div></pre></td></tr></table></figure>
+<h2 id="API-server"><a href="#API-server" class="headerlink" title="API server"></a>API server</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Kubernetes 是一段组件的联合统称，hyperkube运行你运行多个组件，第一个组件就是API server</div><div class="line">docker run -d --name=api \</div><div class="line">    --net=host --pid=host --privileged=true \</div><div class="line">    gcr.io/google_containers/hyperkube:v1.2.2 \</div><div class="line">    /hyperkube apiserver \</div><div class="line">    --insecure-bind-address=0.0.0.0 \</div><div class="line">    --service-cluster-ip-range=10.0.0.1/24 \</div><div class="line">    --etcd_servers=http://127.0.0.1:4001</div></pre></td></tr></table></figure>
+<h2 id="Master"><a href="#Master" class="headerlink" title="Master"></a>Master</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">docker run -d --name=kubs \</div><div class="line">  --volume=/:/rootfs:ro \</div><div class="line">  --volume=/sys:/sys:ro \</div><div class="line">  --volume=/dev:/dev \</div><div class="line">  --volume=/var/lib/docker/:/var/lib/docker:rw \</div><div class="line">  --volume=/var/lib/kubelet/:/var/lib/kubelet:rw \</div><div class="line">  --volume=/var/run:/var/run:rw \</div><div class="line">  --net=host \</div><div class="line">  --pid=host \</div><div class="line">  --privileged=true \</div><div class="line">  gcr.io/google_containers/hyperkube:v1.2.2 \</div><div class="line">  /hyperkube kubelet \</div><div class="line">  --containerized \</div><div class="line">  --hostname-override=&quot;0.0.0.0&quot; \</div><div class="line">  --address=&quot;0.0.0.0&quot; \</div><div class="line">  --cluster_dns=10.0.0.10 --cluster_domain=cluster.local \</div><div class="line">  --api-servers=http://localhost:8080 \</div><div class="line">  --config=/etc/kubernetes/manifests-multi</div></pre></td></tr></table></figure>
+<p>Master 是集群的控制单元，这个master 管理调度一个新的容器在哪个节点运行<br>其中 控制管理处理复制  调度服务 追踪资源的使用</p>
+<h2 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a>Proxy</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">docker run -d --name=proxy\</div><div class="line">    --net=host \</div><div class="line">    --privileged \</div><div class="line">    gcr.io/google_containers/hyperkube:v1.2.2 \</div><div class="line">    /hyperkube proxy \</div><div class="line">    --master=http://0.0.0.0:8080 --v=2</div><div class="line">任何节点对集群的请求都会通过代理服务来转发，它处理负载均衡和两个容器之间的通信</div></pre></td></tr></table></figure>
+<h2 id="Kubectl"><a href="#Kubectl" class="headerlink" title="Kubectl"></a>Kubectl</h2><p>Kubectl是个命令行客户端来和Master进行通信。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">curl -o ~/.bin/kubectl http://storage.googleapis.com/kubernetes-release/release/v1.2.2/bin/linux/amd64/kubectl</div><div class="line">chmod u+x ~/.bin/kubectl</div><div class="line"></div><div class="line">使用这个客户端，要定义一个环境变量</div><div class="line"></div><div class="line"></div><div class="line">export KUBERNETES_MASTER=http://host01:8080</div></pre></td></tr></table></figure>
+<h2 id="KubeDNS-SkyDNS"><a href="#KubeDNS-SkyDNS" class="headerlink" title="KubeDNS / SkyDNS"></a>KubeDNS / SkyDNS</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">Kubernetes  使用 etc的 它的关系型DNS服务叫做 SkyDNS</div><div class="line">kubectl create -f ~/kube-system.json</div><div class="line">kubectl create -f ~/skydns-rc.yaml</div><div class="line">kubectl create -f ~/skydns-svc.yaml</div><div class="line"></div><div class="line"></div><div class="line">  &gt; cat kube-system.json</div><div class="line">&#123;</div><div class="line">  &quot;kind&quot;: &quot;Namespace&quot;,</div><div class="line">  &quot;apiVersion&quot;: &quot;v1&quot;,</div><div class="line">  &quot;metadata&quot;: &#123;</div><div class="line">    &quot;name&quot;: &quot;kube-system&quot;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Kube-UI"><a href="#Kube-UI" class="headerlink" title="Kube UI"></a>Kube UI</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">使用下面 命令 启动 图形面板</div><div class="line">kubectl create -f ~/dashboard.yaml</div><div class="line"></div><div class="line"></div><div class="line">dashboard.yaml 中内容</div><div class="line"></div><div class="line">kind: List</div><div class="line">apiVersion: v1</div><div class="line">items:</div><div class="line">- kind: ReplicationController</div><div class="line">  apiVersion: v1</div><div class="line">  metadata:</div><div class="line">    labels:</div><div class="line">      app: kubernetes-dashboard</div><div class="line">      version: v1.0.1</div><div class="line">    name: kubernetes-dashboard</div><div class="line">    namespace: kube-system</div><div class="line">  spec:</div><div class="line">    replicas: 1</div><div class="line">    selector:</div><div class="line">      app: kubernetes-dashboard</div><div class="line">    template:</div><div class="line">      metadata:</div><div class="line">        labels:</div><div class="line">          app: kubernetes-dashboard</div><div class="line">      spec:</div><div class="line">        containers:</div><div class="line">        - name: kubernetes-dashboard</div><div class="line">          image: gcr.io/google_containers/kubernetes-dashboard-amd64:v1.0.1</div><div class="line">          imagePullPolicy: Always</div><div class="line">          ports:</div><div class="line">          - containerPort: 9090</div><div class="line">            protocol: TCP</div><div class="line">          args:</div><div class="line">            - --apiserver-host=172.17.0.28:8080</div><div class="line">          livenessProbe:</div><div class="line">            httpGet:</div><div class="line">              path: /</div><div class="line">              port: 9090</div><div class="line">            initialDelaySeconds: 30</div><div class="line">            timeoutSeconds: 30</div><div class="line">- kind: Service</div><div class="line">  apiVersion: v1</div><div class="line">  metadata:</div><div class="line">    labels:</div><div class="line">      app: kubernetes-dashboard</div><div class="line">      kubernetes.io/cluster-service: &quot;true&quot;</div><div class="line">    name: kubernetes-dashboard</div><div class="line">    namespace: kube-system</div><div class="line">  spec:</div><div class="line">    type: NodePort</div><div class="line">    ports:</div><div class="line">    - port: 80</div><div class="line">      targetPort: 9090</div><div class="line">    selector:</div><div class="line">      app: kubernetes-dashboard</div></pre></td></tr></table></figure>
+<h2 id="健康检查"><a href="#健康检查" class="headerlink" title="健康检查"></a>健康检查</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">curl http://host01:4001/version</div><div class="line">curl http://host01:8080/version</div><div class="line">export KUBERNETES_MASTER=http://host01:8080</div><div class="line">kubectl cluster-info   查看集群信息</div><div class="line">kubectl get nodes</div><div class="line"></div><div class="line">&gt; cat /home/scrapbook/.bin/launch.sh</div><div class="line">echo &quot;Starting Kubernetes v1.2.2...&quot;</div><div class="line">docker run -d --net=host gcr.io/google_containers/etcd:2.2.1 /usr/local/bin/etcd --list</div><div class="line">en-client-urls=http://0.0.0.0:4001 --advertise-client-urls=http://0.0.0.0:4001 --data-d</div><div class="line">ir=/var/etcd/data</div><div class="line">docker run -d --name=api --net=host --pid=host --privileged=true gcr.io/google_containe</div><div class="line">rs/hyperkube:v1.2.2 /hyperkube apiserver --insecure-bind-address=0.0.0.0 --service-clus</div><div class="line">ter-ip-range=10.0.0.1/24 --etcd_servers=http://127.0.0.1:4001 --v=2</div><div class="line">docker run -d --name=kubs --volume=/:/rootfs:ro --volume=/sys:/sys:ro --volume=/dev:/de</div><div class="line">v --volume=/var/lib/docker/:/var/lib/docker:rw --volume=/var/lib/kubelet/:/var/lib/kube</div><div class="line">let:rw --volume=/var/run:/var/run:rw --net=host --pid=host --privileged=true gcr.io/goo</div><div class="line">gle_containers/hyperkube:v1.2.2 /hyperkube kubelet --allow-privileged=true --containeri</div><div class="line">zed --enable-server --hostname-override=&quot;127.0.0.1&quot; --address=&quot;0.0.0.0&quot; --api-servers=h</div><div class="line">ttp://0.0.0.0:8080 --cluster_dns=10.0.0.10 --cluster_domain=cluster.local --config=/etc</div><div class="line">/kubernetes/manifests-multi</div><div class="line">echo &quot;Downloading Kubectl...&quot;</div><div class="line">curl -o ~/.bin/kubectl http://storage.googleapis.com/kubernetes-release/release/v1.2.2/</div><div class="line">bin/linux/amd64/kubectl</div><div class="line">chmod u+x ~/.bin/kubectl</div><div class="line">export KUBERNETES_MASTER=http://host01:8080</div><div class="line">echo &quot;Waiting for Kubernetes to start...&quot;</div><div class="line">until $(kubectl cluster-info &amp;&gt; /dev/null); do</div><div class="line">  sleep 1</div><div class="line">done</div><div class="line">echo &quot;Starting Kubernetes Proxy...&quot;</div><div class="line">docker run -d --name=proxy --net=host --privileged gcr.io/google_containers/hyperkube:v</div><div class="line">1.2.2 /hyperkube proxy --proxy-mode=userspace --master=http://0.0.0.0:8080 --v=2</div><div class="line">echo &quot;Kubernetes started&quot;</div><div class="line">echo &quot;Starting Kubernetes DNS...&quot;</div><div class="line">kubectl -s http://host01:8080 create -f ~/kube-system.json</div><div class="line">kubectl -s http://host01:8080 create -f ~/skydns-rc.yaml</div><div class="line">kubectl -s http://host01:8080 create -f ~/skydns-svc.yaml</div><div class="line">echo &quot;Starting Kubernetes UI...&quot;</div><div class="line">kubectl -s http://host01:8080 create -f ~/dashboard.yaml</div><div class="line">kubectl -s http://host01:8080 cluster-info</div></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/23/etcd/etcd/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/23/zabbix/监控已完成清单_v0.0.1/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/05/23/Kubernetes/Kubernetes/"
+           data-title="" data-url="http://www.rhel.cc/2017/05/23/Kubernetes/Kubernetes/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xw819.com1.z0.glb.clouddn.com/RH_CertifiedArchitect_RGB.svg"
+               alt="kikiyou" />
+          <p class="site-author-name" itemprop="name">kikiyou</p>
+           
+              <p class="site-description motion-element" itemprop="description">越努力越幸运</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">204</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yewang15215" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.quora.com/profile/King-Yip-3" target="_blank" title="Quora">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Quora
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/wutongyip" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.douban.com/people/yewang15215/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.guokr.com/i/0121652172/" target="_blank" title="果壳">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  果壳
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/hellokingyip" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/KingYip15215" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/kingyip15215" target="_blank" title="新浪微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  新浪微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/sindresorhus/awesome" title="Awesome" target="_blank">Awesome</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#k8s-介绍"><span class="nav-number">1.</span> <span class="nav-text">k8s 介绍</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#启动一个单节点的集群"><span class="nav-number"></span> <span class="nav-text">启动一个单节点的集群</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#启动etcd集群"><span class="nav-number">1.</span> <span class="nav-text">启动etcd集群</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#API-server"><span class="nav-number">2.</span> <span class="nav-text">API server</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Master"><span class="nav-number">3.</span> <span class="nav-text">Master</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Proxy"><span class="nav-number">4.</span> <span class="nav-text">Proxy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kubectl"><span class="nav-number">5.</span> <span class="nav-text">Kubectl</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#KubeDNS-SkyDNS"><span class="nav-number">6.</span> <span class="nav-text">KubeDNS / SkyDNS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kube-UI"><span class="nav-number">7.</span> <span class="nav-text">Kube UI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#健康检查"><span class="nav-number">8.</span> <span class="nav-text">健康检查</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kikiyou</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"liveandlearn"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

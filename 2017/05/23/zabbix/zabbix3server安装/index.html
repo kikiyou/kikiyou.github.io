@@ -1,0 +1,948 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="zabbix使用教程1：zabbix3Server安装
+nginx 版本： 1.10.2-1.el6.ngxzabbix版本：zabbix_server: 3.0.7zabbix_agentd: 3.2.3
+一、环境介绍[root@centos63 ~]# cat /etc/redhat-releaseCentOS release 6.3 (Final)[root@centos63 ~]# una">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Monkey">
+<meta property="og:url" content="http://www.rhel.cc/2017/05/23/zabbix/zabbix3server安装/index.html">
+<meta property="og:site_name" content="Monkey">
+<meta property="og:description" content="zabbix使用教程1：zabbix3Server安装
+nginx 版本： 1.10.2-1.el6.ngxzabbix版本：zabbix_server: 3.0.7zabbix_agentd: 3.2.3
+一、环境介绍[root@centos63 ~]# cat /etc/redhat-releaseCentOS release 6.3 (Final)[root@centos63 ~]# una">
+<meta property="og:updated_time" content="2017-04-06T12:22:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Monkey">
+<meta name="twitter:description" content="zabbix使用教程1：zabbix3Server安装
+nginx 版本： 1.10.2-1.el6.ngxzabbix版本：zabbix_server: 3.0.7zabbix_agentd: 3.2.3
+一、环境介绍[root@centos63 ~]# cat /etc/redhat-releaseCentOS release 6.3 (Final)[root@centos63 ~]# una">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.rhel.cc/2017/05/23/zabbix/zabbix3server安装/"/>
+
+
+
+
+
+  <title> | Monkey</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-69625009-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?1d19ec01ee75454338de4be42f062626";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Monkey</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Think! And Think Again</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'qXreyHC_EX5zr5PLMxgp','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.rhel.cc/2017/05/23/zabbix/zabbix3server安装/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="kikiyou">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://7xw819.com1.z0.glb.clouddn.com/RH_CertifiedArchitect_RGB.svg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Monkey">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-23T11:29:52+08:00">
+                2017-05-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/05/23/zabbix/zabbix3server安装/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/23/zabbix/zabbix3server安装/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>zabbix使用教程1：zabbix3Server安装</p>
+<p>nginx 版本： 1.10.2-1.el6.ngx<br>zabbix版本：<br>zabbix_server: 3.0.7<br>zabbix_agentd: 3.2.3</p>
+<p>一、环境介绍<br>[root@centos63 ~]# cat /etc/redhat-release<br>CentOS release 6.3 (Final)<br>[root@centos63 ~]# uname -a<br>Linux centos63 2.6.32-279.el6.x86_64 #1 SMP Fri Jun 22 12:19:21 UTC 2012 x86_64 x86_64 x86_64 GNU/Linux</p>
+<p>IP地址    角色<br>安装软件    操作系统<br>192.168.122.18    服务器端+被监控端+数据库存储<br>zabbix-web、zabbix-server、zabbix-agent、mysql，php5.6，httpd    centos6.3</p>
+<p>二、软件包安装<br>安装依赖（fsv_zabbix3_nginx.tar.xz 中已提供）：<br>php 版本大于等于 php 5.4.0<br>PHP gd    大于等于    2.0<br>PHP libxml    大于等于    2.6.15</p>
+<p>php 设置：</p>
+<p>注： 推荐 mysql 设置  innodb_file_per_table=1 使用独立表空间<br>如下为zabbix 调优建议</p>
+<p>##zabbix tuning<br>innodb_file_per_table=1<br>event_scheduler=ON<br>wait_timeout=600<br>sync_binlog=500<br>query_cache_type=0<br>query_cache_size=0<br>innodb_flush_method = O_DIRECT<br>innodb_io_capacity  = 2000<br>innodb_old_blocks_time = 1000<br>innodb_buffer_pool_size=10G<br>innodb_buffer_pool_instances=16<br>innodb_flush_log_at_trx_commit=0<br>innodb_log_file_size = 512M<br>innodb_log_buffer_size  = 128M</p>
+<p>#tmpdir = /dev/shm/mysql</p>
+<p>##zabbix -end</p>
+<p>注意： 本教程 默认mysql 密码是Mysql23+   如果不是，请修改<br>注意： 本教程 默认mysql 密码是Mysql23+   如果不是，请修改<br>注意： 本教程 默认mysql 密码是Mysql23+   如果不是，请修改</p>
+<ol>
+<li>设置软件仓库<br>下载:<br>\it-fs\Upload\SS Department\monkey\zabbix\fsv_zabbix3_nginx.tar.xz</li>
+</ol>
+<p>mkdir -p /root/install/<br>tar xf fsv_zabbix3_nginx.tar.xz -C /root/install/</p>
+<p>清除 默认无用的仓库</p>
+<p>mkdir -p /etc/yum.repos.d/bak<br>mv /etc/yum.repos.d/*.repo /etc/yum.repos.d/bak/</p>
+<p>cat &lt;&lt; _EOF &gt; /etc/yum.repos.d/fsv_zabbix.repo<br>[fsv_zabbix]<br>name=fonsview repo<br>baseurl=file:///root/install/fsv_zabbix3/6/<br>enabled=1<br>gpgcheck=0<br>_EOF</p>
+<ol>
+<li><p>创建mysql 登录认证文件<br>cat &lt;&lt; _EOF &gt; ~/.my.cnf<br>[client]<br>host= localhost<br>user = root<br>password = “Mysql23+”<br>_EOF</p>
+</li>
+<li><p>卸载旧版 php相关<br>yum clean all<br>yum remove php*</p>
+</li>
+<li><p>php56 安装</p>
+</li>
+</ol>
+<p>yum –enablerepo=fsv_zabbix install php php-fpm php-mysql php-gd php-bcmath php-common php-mbstring php-xml</p>
+<ol>
+<li><p>安装zabbix<br>yum –enablerepo=fsv_zabbix install zabbix-server-mysql zabbix-web zabbix-web-mysql  zabbix-agent.x86_64 zabbix-get</p>
+</li>
+<li><p>安装nginx<br>yum –enablerepo=fsv_zabbix install nginx</p>
+</li>
+<li><p>修改文件权限<br>sed -i “s/user = apache/user = nginx/g” /etc/php-fpm.d/www.conf<br>sed -i “s/group = apache/group = nginx/g” /etc/php-fpm.d/www.conf</p>
+</li>
+<li><p>查看当前主机 php版本<br>php -v<br>PHP 5.6.30 (cli) (built: Jan 19 2017 08:09:42)<br>查看软件包 是否已经安装<br>rpm -q zabbix-server-mysql</p>
+</li>
+<li><p>查看当前nginx版本<br>[root@centos63 yum.repos.d]# nginx -V<br>nginx version: nginx/1.10.2</p>
+</li>
+<li><p>修改PHP的设定<br>sed -i -e “s/memory_limit = 128M/memory_limit = 256M/g” /etc/php.ini<br>sed -i -e “s/post_max_size = 8M/post_max_size = 16M/g” /etc/php.ini<br>sed -i -e “s/max_execution_time = 30/max_execution_time = 300/g” /etc/php.ini<br>sed -i -e “s/max_input_time = 60/max_input_time = 300/g” /etc/php.ini<br>sed -i -e “s/;date.timezone =/date.timezone = Asia\/Shanghai/g” /etc/php.ini<br>sed -i -e “s/;always_populate_raw_post_data = On/always_populate_raw_post_data = -1/g” /etc/php.ini<br>sed -i -e “s/;always_populate_raw_post_data = -1/always_populate_raw_post_data = -1/g” /etc/php.ini</p>
+</li>
+<li><p>创建数据库<br>shell&gt; mysql -uroot<br>mysql&gt; create database zabbix character set utf8 collate utf8_bin;<br>mysql&gt; grant all privileges on zabbix.* to zabbix@localhost identified by ‘Mysql23+’;<br>mysql&gt; flush privileges;<br>mysql&gt; quit;</p>
+</li>
+<li><p>数据库导入  （注：需要等待三分钟）<br>shell&gt; zcat /usr/share/doc/zabbix-server-mysql-3.0.*/create.sql.gz | mysql zabbix</p>
+</li>
+<li><p>修改zabbix-server的配置</p>
+</li>
+</ol>
+<p>修改配置：<br>shell&gt; cat &lt;&lt; _EOF &gt; /etc/zabbix/zabbix_server.conf<br>LogFile=/var/log/zabbix/zabbix_server.log<br>LogFileSize=0<br>PidFile=/var/run/zabbix/zabbix_server.pid<br>DBName=zabbix<br>DBUser=zabbix<br>DBPassword=Mysql23+<br>SNMPTrapperFile=/var/log/snmptrap/snmptrap.log<br>Timeout=4<br>AlertScriptsPath=/usr/lib/zabbix/alertscripts<br>ExternalScripts=/usr/lib/zabbix/externalscripts<br>LogSlowQueries=3000<br>StartPollers=40<br>StartPollersUnreachable=3<br>StartTrappers=10<br>StartPingers=10<br>StartDiscoverers=10<br>MaxHousekeeperDelete=20000<br>CacheSize=256M<br>StartDBSyncers=4<br>HistoryCacheSize=256M<br>ValueCacheSize=256M<br>TrendCacheSize=16M<br>HistoryIndexCacheSize=16M<br>_EOF</p>
+<ol>
+<li><p>修改客户端的配置<br>shell&gt; cat &lt;&lt; _EOF &gt; /etc/zabbix/zabbix_agentd.conf<br>PidFile=/var/run/zabbix/zabbix_agentd.pid<br>LogFile=/var/log/zabbix/zabbix_agentd.log<br>LogFileSize=0<br>Server=127.0.0.1<br>ServerActive=127.0.0.1<br>Hostname=Zabbix server<br>Include=/etc/zabbix/zabbix_agentd.d/<br>_EOF</p>
+</li>
+<li><p>配置zabbix web<br>mv /etc/nginx/conf.d/default.conf  /etc/nginx/conf.d/default.conf_bak</p>
+</li>
+</ol>
+<p>vi /etc/nginx/conf.d/zabbix.conf<br>server {<br>    location /zabbix {<br>    alias /usr/share/zabbix;<br>    index index.php index.php ;<br>}<br>    location ~ .php$ { include /etc/nginx/fastcgi_params;<br>        fastcgi_pass  127.0.0.1:9000;<br>        fastcgi_index index.php;<br>        fastcgi_param SCRIPT_FILENAME /usr/share/$fastcgi_script_name; </p>
+<p>  }<br>}</p>
+<p>chown nginx:nginx  /usr/share/zabbix/ -R<br>chown nginx:nginx -R /etc/zabbix/<br>chown root:nginx /var/lib/php/session/<br>chown nginx:nginx /var/lib/php/session/*</p>
+<ol>
+<li>启动服务<br>chkconfig zabbix-agent on<br>service zabbix-agent restart </li>
+</ol>
+<p>chkconfig zabbix-server on<br>service zabbix-server restart</p>
+<p>chkconfig php-fpm on<br>service php-fpm restart</p>
+<p>chkconfig nginx on<br>service nginx restart</p>
+<ol>
+<li>检查<br>[root@rhel6 ~]#/etc/init.d/zabbix-server status</li>
+</ol>
+<p>1.查看是zabbix_server否启动正常<br>(1)查看端口是否侦听<br> [root@rhel6 ~]# netstat -anlp | grep 10051<br>tcp        0      0 0.0.0.0:10051               0.0.0.0:<em>                   LISTEN      5636/zabbix_server<br>tcp        0      0 :::10051                    :::</em>                        LISTEN      5636/zabbix_server  </p>
+<p>####因为默认情况下zabbix_server侦听的是10051端口  如上查看可以zabbix_server已经侦听<br>（2）查看日志<br> [root@rhel6 ~]# cat /var/log/zabbix/zabbix_server.log<br>  6006:20170119:214734.849 Starting Zabbix Server. Zabbix 3.0.7 (revision 64609).<br>  6006:20170119:214734.849 <strong>**</strong> Enabled features <strong>**</strong><br>  6006:20170119:214734.850 SNMP monitoring:           YES<br>  6006:20170119:214734.850 IPMI monitoring:           YES<br>  6006:20170119:214734.850 Web monitoring:            YES<br>  6006:20170119:214734.850 VMware monitoring:         YES<br>  6006:20170119:214734.850 SMTP authentication:        NO<br>  6006:20170119:214734.850 Jabber notifications:      YES<br>  6006:20170119:214734.850 Ez Texting notifications:  YES<br>  6006:20170119:214734.850 ODBC:                      YES<br>  6006:20170119:214734.850 SSH2 support:              YES<br>  6006:20170119:214734.850 IPv6 support:              YES<br>  6006:20170119:214734.850 TLS support:               YES<br>  6006:20170119:214734.850 <strong><strong><strong><strong><strong><strong><strong>**</strong></strong></strong></strong></strong></strong></strong><br>  6006:20170119:214734.850 using configuration file: /etc/zabbix/zabbix_server.conf</p>
+<p>2.查看zabbix_agentd 是否启动正常<br> [root@rhel6 ~]#/etc/init.d/zabbix-agent status<br>(1)查看侦听</p>
+<p>###默认情况下 zabbix_agentd侦听10050端口<br>[root@centos63 httpd]# netstat -anlp | grep 10050<br>tcp        0      0 0.0.0.0:10050               0.0.0.0:<em>                   LISTEN      5569/zabbix_agentd<br>（2）查看日志<br>[root@centos63 httpd]# cat /var/log/zabbix/zabbix_agentd.log<br>  5569:20170119:210723.409 Starting Zabbix Agent [Zabbix server]. Zabbix 3.0.7 (revision 64609).<br>  5569:20170119:210723.409 <strong><strong> Enabled features </strong></strong><br>  5569:20170119:210723.409 IPv6 support:          YES<br>  5569:20170119:210723.409 TLS support:           YES<br>  5569:20170119:210723.409 <strong><strong><strong><strong><strong><strong>*</strong></strong></strong></strong></strong></strong></em><br>  5569:20170119:210723.409 using configuration file: /etc/zabbix/zabbix_agentd.conf</p>
+<p>###如上说明zabbix_agetd 启动正常</p>
+<p>六、通过web管理<br>访问<a href="http://192.168.122.18/zabbix" target="_blank" rel="external">http://192.168.122.18/zabbix</a> 进行安装</p>
+<p>数据库的 库名：zabbix 用户名：zabbix  密码：Mysql23+</p>
+<p>七、登录<br>通过如上安装后就可以登录了：<br>zabbix默认<br>用户名:Admin     (第一个A是大写)<br>密码:zabbix</p>
+<p>nginx优化与加固：</p>
+<ol>
+<li><p>优化<br>sed -i -e “s/#tcp_nopush     on;/tcp_nopush     on;/g” /etc/nginx/nginx.conf<br>sed -i -e “s/#gzip  on;/gzip  on;/g” /etc/nginx/nginx.conf</p>
+</li>
+<li><p>加固<br>隐藏nginx版本：<br>sed -i -e ‘/keepalive_timeout/aserver_tokens  off;’ /etc/nginx/nginx.conf<br>/etc/init.d/nginx restart</p>
+</li>
+</ol>
+<p>隐藏php版本：<br>sed -i -e ‘/expose_php = On/expose_php = Off’ /etc/php-fpm.d/www.conf<br>/etc/init.d/php-fpm restart</p>
+<p>检查：<br>curl -I 127.0.0.1/index.php</p>
+<p>有如下输出：<br>HTTP/1.1 302 Moved Temporarily<br>Server: nginx<br>Date: Fri, 17 Feb 2017 01:51:36 GMT<br>Content-Type: text/html; charset=UTF-8<br>Connection: keep-alive<br>Location: setup.php</p>
+<p>如上 没有显示如下，无法从外部判断 nginx版本号 和 php版本即可<br>X-Powered-By: PHP/5.6.30<br>Server: nginx/1.10.3</p>
+<p>##############<br>可能出错 标注：</p>
+<ol>
+<li>php 无法解析   （白屏）<br>（1）php-fpm 没有启动<br>（2）php-fpm权限异常，如下可解决</li>
+</ol>
+<p>sed -i “s/user = apache/user = nginx/g” /etc/php-fpm.d/www.conf<br>sed -i “s/group = apache/group = nginx/g” /etc/php-fpm.d/www.conf<br>chown nginx:nginx  /usr/share/zabbix/ -R<br>chown  nginx:nginx -R /etc/zabbix/<br>/etc/init.d/php-fpm restart</p>
+<ol>
+<li>一直停留在 setup.php 页面，无法进入下一步<br>原因： php 的session无法保存，session目录权限异常</li>
+</ol>
+<p>执行如下命令可解决：<br>chown root:nginx /var/lib/php/session/<br>chown nginx:nginx /var/lib/php/session/*</p>
+<ol>
+<li>zabbix忘记密码，重置密码方法</li>
+</ol>
+<p>此方法是通过进入数据库更改密码，操作步骤如下：<br>mysql&gt; use zabbix;<br>Reading table information for completion of table and column names<br>You can turn off this feature to get a quicker startup with -A<br>Database changed<br>查看数据有那些表<br>mysql&gt; show tables;<br>查看是否存放用户、密码信息<br>mysql&gt; select userid,alias,name,passwd from users;<br>+——–+——-+——–+———————————-+<br>| userid | alias | name   | passwd                           |<br>+——–+——-+——–+———————————-+<br>|      1 | Admin | Zabbix | 5fce1b3e34b520afeffb37ce08c7cd66 |<br>|      2 | guest |        | d41d8cd98f00b204e9800998ecf8427e |<br>+——–+——-+——–+———————————-+<br>2 rows in set (0.00 sec)<br>如上可以默认管理员用户为Admin<br>更改密码为zabbix<br>mysql&gt; update  users set passwd=md5(“zabbix”) where userid=’1’;<br>Query OK,0 rows affected (0.01 sec)<br>Rows matched:1Changed:0Warnings:0<br>zabbix 的用户密码是使用md5的方式进行的加密 ，上面的mysql语句执行后，admin 管理员用户的密码就会改为zabbix 。</p>
+<p>####################</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/23/zabbix/zabbix3server软件包提取/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/23/zabbix/zabbix3server创建使用分区表/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/05/23/zabbix/zabbix3server安装/"
+           data-title="" data-url="http://www.rhel.cc/2017/05/23/zabbix/zabbix3server安装/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xw819.com1.z0.glb.clouddn.com/RH_CertifiedArchitect_RGB.svg"
+               alt="kikiyou" />
+          <p class="site-author-name" itemprop="name">kikiyou</p>
+           
+              <p class="site-description motion-element" itemprop="description">越努力越幸运</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">204</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yewang15215" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.quora.com/profile/King-Yip-3" target="_blank" title="Quora">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Quora
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/wutongyip" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.douban.com/people/yewang15215/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.guokr.com/i/0121652172/" target="_blank" title="果壳">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  果壳
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/hellokingyip" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/KingYip15215" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/kingyip15215" target="_blank" title="新浪微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  新浪微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/sindresorhus/awesome" title="Awesome" target="_blank">Awesome</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kikiyou</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"liveandlearn"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,985 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="参考-zabbix 图像显示 Grafana如何在CentOS 7的Zabbix中安装和配置Grafana绘制漂亮的图表
+
+grafana
+
+
+下载docker run -d –name=grafana-xxl -p 3000:3000 monitoringartist/grafana-xxl:latest
+
+
+运行：docker run -d -v /var/lib/grafana –name">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Monkey">
+<meta property="og:url" content="http://www.rhel.cc/2017/02/28/grafana/grafana/index.html">
+<meta property="og:site_name" content="Monkey">
+<meta property="og:description" content="参考-zabbix 图像显示 Grafana如何在CentOS 7的Zabbix中安装和配置Grafana绘制漂亮的图表
+
+grafana
+
+
+下载docker run -d –name=grafana-xxl -p 3000:3000 monitoringartist/grafana-xxl:latest
+
+
+运行：docker run -d -v /var/lib/grafana –name">
+<meta property="og:updated_time" content="2017-02-28T07:47:44.373Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Monkey">
+<meta name="twitter:description" content="参考-zabbix 图像显示 Grafana如何在CentOS 7的Zabbix中安装和配置Grafana绘制漂亮的图表
+
+grafana
+
+
+下载docker run -d –name=grafana-xxl -p 3000:3000 monitoringartist/grafana-xxl:latest
+
+
+运行：docker run -d -v /var/lib/grafana –name">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.rhel.cc/2017/02/28/grafana/grafana/"/>
+
+
+
+
+
+  <title> | Monkey</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-69625009-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?1d19ec01ee75454338de4be42f062626";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Monkey</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Think! And Think Again</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'qXreyHC_EX5zr5PLMxgp','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.rhel.cc/2017/02/28/grafana/grafana/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="kikiyou">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://7xw819.com1.z0.glb.clouddn.com/RH_CertifiedArchitect_RGB.svg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Monkey">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-28T15:47:44+08:00">
+                2017-02-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/02/28/grafana/grafana/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/28/grafana/grafana/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="http://qkxue.net/info/188153/zabbix-Grafana" target="_blank" rel="external">参考-zabbix 图像显示 Grafana</a><br><a href="https://www.howtoing.com/how-to-install-and-configure-grafana-to-plot-beautiful-graphs-from-zabbix-on-centos-7/" target="_blank" rel="external">如何在CentOS 7的Zabbix中安装和配置Grafana绘制漂亮的图表</a></p>
+<ol>
+<li>grafana</li>
+</ol>
+<ul>
+<li>下载<br>docker run -d –name=grafana-xxl -p 3000:3000 monitoringartist/grafana-xxl:latest</li>
+</ul>
+<ul>
+<li>运行：<br>docker run -d -v /var/lib/grafana –name grafana-xxl-storage busybox:latest</li>
+</ul>
+<p>docker run \<br>  -d \<br>  -p 3000:3000 \<br>  –name grafana-xxl \<br>  –volumes-from grafana-xxl-storage \<br>  monitoringartist/grafana-xxl:latest</p>
+<ul>
+<li>添加zabbix监控</li>
+</ul>
+<ol>
+<li>把zabbix enable</li>
+<li>Data Source –&gt; Add data source –&gt;</li>
+</ol>
+<p>Name zabbix   Default 选中<br>Type zabbix<br>Url <a href="http://xxxxx/zabbix/api_jsonrpc.php" target="_blank" rel="external">http://xxxxx/zabbix/api_jsonrpc.php</a><br>zabbix api details<br>username Admin<br>Password zabbix<br>Trends enable</p>
+<ul>
+<li>添加图形</li>
+</ul>
+<ol>
+<li>ADD ROW  选 Graph</li>
+<li>左键上标题栏   选择 edite</li>
+<li>Metrics(度量) 中 Panel data source(面板数据源)这里选择zabbix</li>
+<li>Metrics中<br>Group 填入 $group   Host 填入 $host<br>Application 空      Item 填入 网卡</li>
+<li>如果想把 出和入两个流量合并  可以再选择  Add query添加一栏 或者 右边选项里面选复制</li>
+</ol>
+<ul>
+<li>导出vsv 所有图片，选右键 选项这里可以导出到csv</li>
+</ul>
+<ul>
+<li>添加报警</li>
+</ul>
+<ol>
+<li>选择一副图 左键上标题栏   选择 edite </li>
+<li>选择Alert  name选项 配置名字  Evaluate every（评估时间）60s</li>
+<li><p>条件 when avg() of  （查询A ，5分钟，到现在）<br>is above（以上）<br>is below（以下）<br>IS OUTSIDE RANGE（除此之外）<br>IS WITHIN RANGE（在这个范围之内）<br>HAS NO VALUE(没有值)</p>
+<p>SET STATE TO 当达到触发条件之后，把状态改为ok 或报警</p>
+</li>
+</ol>
+<p>编辑菜单中各选项</p>
+<ol>
+<li>General<br>info（信息）<br>Title（标题）<br>Description（描述）</li>
+</ol>
+<p>Dimensions（尺度）<br>Span（跨度）   –》最大为12<br>Height(高)<br>Transparent（透明）</p>
+<p>Templating（模板）<br>Repeat Panel（复制面板）<br>Min span（最小跨度）</p>
+<ol>
+<li><p>Metrics（度量，规律）</p>
+</li>
+<li><p>Axes（轴，x或y轴）<br>Unit （这里设置数据的单位）</p>
+</li>
+<li><p>Legend（铭文）<br>定义汇总信息是在右边还是下面，汇总信息 包括 最大 最小 平均 当前</p>
+</li>
+<li><p>Display(图形展示)</p>
+</li>
+<li>Series  overrides  这里可以设定，把进流量,变到下面显示</li>
+<li><p>Draw modes(画图模式)  这里可以设置图形是 bars条状图 lines折线图   points点图</p>
+</li>
+<li><p>添加 override<br>alias or regex   /Incoming/   Transform: negative-Y （改变为负数在y轴）</p>
+</li>
+</ol>
+<ol>
+<li><p>Alert（报警）</p>
+</li>
+<li><p>时间范围</p>
+</li>
+</ol>
+<p>右上角设置选模板，可以设置变量</p>
+<p>$group    <em><br>$host    $group.</em><br>$netif    <em>.$host.Network interfaces.</em></p>
+<p>说明，选ss的进流量 和 出流量进行对比，ss的进流量是 调度器访问所以比较平均，但是出流是就是有变化的，说明出流量是给客户的</p>
+<ul>
+<li>添加饼图<br>在添加图形搜索中搜索  pie</li>
+</ul>
+<ol>
+<li>Metrics 中添加两个选项 一个是 总磁盘使用情况  另一个是当前磁盘使用情况</li>
+<li>在Options 设置这里   选legend（铭文）<br>可以显示 占用百分比等</li>
+</ol>
+<ul>
+<li><p>Singlestat 单值 状态面板<br>选择 启用Gauge  可以达到 显示汽车仪表盘的功能</p>
+</li>
+<li><p>添加zabbix 触发器<br>图表中选择   Zabbix Triggers<br>即可</p>
+</li>
+</ul>
+<p>并且可以对一个触发器 显示通告，询问为什么？</p>
+<ul>
+<li><p>显示当前时间<br>clock</p>
+</li>
+<li><p>ajax<br>使用ajax 动态的从远程 获取文件内容</p>
+</li>
+</ul>
+<p>可以把连接地址共享，嵌入到一个页面</p>
+<ul>
+<li>ROW (行)<br>最小的排列单元  可以有12个</li>
+<li><p>Panel（面板）<br>There are currently four Panel types: Graph, Singlestat, Dashlist, Table,and Text.</p>
+</li>
+<li><p>Query Editor（查询编辑器）</p>
+</li>
+<li><p>Dashboard(面板)<br>面板可以用  模板、描述、共享、快照 等</p>
+</li>
+<li><p>支持正则</p>
+</li>
+</ul>
+<p>比如：<br>/NJ-HX-F4-IPTV-Server-EPG0[1-3]/</p>
+<p>做一到3张图</p>
+<p>Group /.*/<br>Item  /CPU (system|user) time/</p>
+<p>Functions<br>groupBy(10s, avg)</p>
+<p>支持聚合  各自10秒钟的平均值</p>
+<p>setAlias(xxx/s)</p>
+<ul>
+<li><p>如果一个区间图点过多，可以减少<br>Max data points </p>
+</li>
+<li><p>Histogram 柱状图</p>
+</li>
+<li><p>把自己做的图 分享出去<br>Publish to snapshot.raintank.io</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/27/mongodb/mongodb/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/08/python/python_basic/udcity_306_python_basic/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/02/28/grafana/grafana/"
+           data-title="" data-url="http://www.rhel.cc/2017/02/28/grafana/grafana/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xw819.com1.z0.glb.clouddn.com/RH_CertifiedArchitect_RGB.svg"
+               alt="kikiyou" />
+          <p class="site-author-name" itemprop="name">kikiyou</p>
+           
+              <p class="site-description motion-element" itemprop="description">越努力越幸运</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">204</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yewang15215" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.quora.com/profile/King-Yip-3" target="_blank" title="Quora">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Quora
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/wutongyip" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.douban.com/people/yewang15215/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.guokr.com/i/0121652172/" target="_blank" title="果壳">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  果壳
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/hellokingyip" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/KingYip15215" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/kingyip15215" target="_blank" title="新浪微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  新浪微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/sindresorhus/awesome" title="Awesome" target="_blank">Awesome</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kikiyou</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"liveandlearn"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

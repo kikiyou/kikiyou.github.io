@@ -1,0 +1,1360 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="php," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="php学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php学习">
+<meta property="og:url" content="http://www.rhel.cc/2016/07/14/php/index.html">
+<meta property="og:site_name" content="Monkey">
+<meta property="og:description" content="php学习">
+<meta property="og:updated_time" content="2016-11-20T12:35:25.506Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="php学习">
+<meta name="twitter:description" content="php学习">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.rhel.cc/2016/07/14/php/"/>
+
+
+
+
+
+  <title>php学习 | Monkey</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-69625009-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?1d19ec01ee75454338de4be42f062626";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Monkey</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Think! And Think Again</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'qXreyHC_EX5zr5PLMxgp','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.rhel.cc/2016/07/14/php/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="kikiyou">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://7xw819.com1.z0.glb.clouddn.com/RH_CertifiedArchitect_RGB.svg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Monkey">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">php学习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-14T10:19:44+08:00">
+                2016-07-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/07/14/php/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/14/php/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="php学习"><a href="#php学习" class="headerlink" title="php学习"></a>php学习</h4><a id="more"></a>
+<ul>
+<li><p>php中显示错误信息 修改php.ini 如下</p>
+<ol>
+<li><p>display_errors = On</p>
+</li>
+<li><p>error_reporting = E_ALL &amp;~E_NOTICE</p>
+<p>在apache中</p>
+<p>1.php_flag display_errors On</p>
+<p>2.php_alue error_reporting 2039</p>
+</li>
+</ol>
+</li>
+<li><p>字符串输出</p>
+<ol>
+<li><p>echo | print</p>
+<blockquote>
+<p>echo “string”</p>
+<p>print “string”</p>
+</blockquote>
+</li>
+<li><p>printf</p>
+<blockquote>
+<p>printf(“my love is %s”, ‘ljq’)</p>
+</blockquote>
+</li>
+<li><p>sprinf</p>
+<blockquote>
+<p>$str = printf(“my love is %s”, ‘ljq’)</p>
+<p>把字符串赋值给变量，而不是打印输出</p>
+</blockquote>
+</li>
+</ol>
+</li>
+<li><p>类型相关</p>
+<ol>
+<li>获取类型<br> string gettype(mixed var)</li>
+<li>转换类型<br> boolean settype(mixed var, string type)</li>
+</ol>
+</li>
+<li><p>echo 和 print的区别</p>
+<p>  echo 可以输出多个参数</p>
+<p>  void echo(string argument1[,….string argumentN])</p>
+</li>
+<li><p>var_dump()<br> void var_dump ( mixed $expression [, mixed $… ] )</p>
+<p> 显示变量信息，方便debug使用</p>
+</li>
+<li><p>控制语句</p>
+<ol>
+<li><p>if语句</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">if</span> (condition) &#123;</div><div class="line">    <span class="comment"># code...</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">if</span> (condition) <span class="keyword">echo</span> <span class="string">""</span>;</div><div class="line"></div><div class="line"><span class="keyword">if</span> (condition) &#123;</div><div class="line">    <span class="comment"># code...</span></div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="comment"># code...</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">$retVal = (condition) ? a : b ;</div></pre></td></tr></table></figure>
+<p>2.switch 语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">switch (variable) &#123;</div><div class="line">    case &apos;value&apos;:</div><div class="line">        # code...</div><div class="line">        break;</div><div class="line"></div><div class="line">    default:</div><div class="line">        # code...</div><div class="line">        break;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>3.循环语句</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">while</span> ($a &lt;= <span class="number">10</span>) &#123;</div><div class="line">    <span class="comment"># code...</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">do</span> &#123;</div><div class="line">    <span class="comment"># code...</span></div><div class="line">&#125; <span class="keyword">while</span> ($a &lt;= <span class="number">10</span>);</div><div class="line"></div><div class="line"><span class="keyword">for</span> ($i=<span class="number">0</span>; $i &lt; ; $i++) &#123;</div><div class="line">    <span class="comment"># code...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>4.foreach语句</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">$links = <span class="keyword">array</span>(<span class="string">"a.cn"</span>,<span class="string">"b.cn"</span>,<span class="string">"c.cn"</span>)</div><div class="line"><span class="keyword">foreach</span> ($links <span class="keyword">as</span> $link) &#123;</div><div class="line">    <span class="keyword">echo</span> $link,<span class="string">'&lt;/br&gt;'</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$links = <span class="keyword">array</span>(<span class="string">'百度'</span> =&gt; <span class="string">'baidu.com'</span> ,<span class="string">'谷歌'</span> =&gt; <span class="string">'google.com'</span>,</div><div class="line"><span class="string">'搜狗'</span> =&gt; <span class="string">'sougou.com'</span>);</div><div class="line"></div><div class="line"><span class="keyword">foreach</span> ($links <span class="keyword">as</span> $title =&gt; $link) &#123;</div><div class="line">    <span class="keyword">echo</span> $title, $link;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>4.文件包含语句</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">include</span> <span class="string">"lib/php/init.inc.php"</span></div><div class="line"><span class="keyword">require_once</span> <span class="string">"lib/php/init.inc.php"</span></div><div class="line"></div><div class="line">条件<span class="keyword">include</span> / <span class="keyword">require</span></div><div class="line"><span class="keyword">if</span> (condition) &#123;</div><div class="line">    <span class="keyword">include</span> <span class="string">"lib/php/true.php"</span></div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">include</span> <span class="string">"lib/php/fail.php"</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">只包含一次 <span class="keyword">include_once</span> /  <span class="keyword">require_once</span></div><div class="line"><span class="keyword">include_once</span>()</div><div class="line"><span class="keyword">require_once</span>()</div></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p>函数 function</p>
+  <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="number">1.</span> 基本函数</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">FunctionName</span><span class="params">($value=<span class="string">''</span>)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="comment"># code...</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="number">2.</span>按引用传递参数</div><div class="line">$cost = <span class="number">20.99</span>;</div><div class="line">$tax = <span class="number">0.0575</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">calculateCost</span><span class="params">(&amp;$cost, $tax)</span></span></div><div class="line">&#123;</div><div class="line">    $cost = $cost + ($cost * $tax);</div><div class="line">    $tax += <span class="number">4</span>;</div><div class="line">&#125;</div><div class="line">calculateCost($cost,$tax);</div><div class="line">printf(<span class="string">"Tax is %01.2f%%&lt;br /&gt;"</span>,$tax*<span class="number">100</span>);</div><div class="line">printf(<span class="string">"Cost is $%01.2f"</span>,$cost);</div><div class="line"></div><div class="line"><span class="number">3.</span>返回多个值</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">retrieveUserProfile</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    $user[] = <span class="string">"Jason"</span>;</div><div class="line">    $user[] = <span class="string">"jason@example.com"</span>;</div><div class="line">    $user[] = <span class="string">"English"</span>;</div><div class="line">    <span class="keyword">return</span> $user;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="keyword">list</span>($name,$email,$language) = retrieveUserProfile();</div><div class="line"> <span class="keyword">echo</span> <span class="string">"Name:$name, email:$email, language:$language"</span>;</div></pre></td></tr></table></figure>
+</li>
+<li><p>数组<br>  php中的数组实际上包含了python的字典</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div><div class="line">248</div><div class="line">249</div><div class="line">250</div><div class="line">251</div><div class="line">252</div><div class="line">253</div><div class="line">254</div><div class="line">255</div><div class="line">256</div><div class="line">257</div><div class="line">258</div><div class="line">259</div><div class="line">260</div><div class="line">261</div><div class="line">262</div><div class="line">263</div><div class="line">264</div><div class="line">265</div><div class="line">266</div><div class="line">267</div><div class="line">268</div><div class="line">269</div><div class="line">270</div><div class="line">271</div><div class="line">272</div><div class="line">273</div><div class="line">274</div><div class="line">275</div><div class="line">276</div><div class="line">277</div><div class="line">278</div><div class="line">279</div><div class="line">280</div><div class="line">281</div><div class="line">282</div><div class="line">283</div></pre></td><td class="code"><pre><div class="line">    - 创建数组</div><div class="line">    1. $state[0] = "Delaware";</div><div class="line"></div><div class="line">    2. 自动创建</div><div class="line">       $state[] = "huawin";</div><div class="line">       $state[] = "yip";</div><div class="line">       $state[] = "tom";</div><div class="line"></div><div class="line">    3. 创建关联数组</div><div class="line">        $state['devops'] = 'tom'</div><div class="line">        $state['dev'] = 'yip'</div><div class="line"></div><div class="line">    4.使用arrary创建</div><div class="line">        （1）索引数组</div><div class="line">            $languages = arrary("english","Gaelic","Spanish");</div><div class="line">        （2）关联数组</div><div class="line">            $languages = array("Spain" =&gt; "Spanish","Treland" =&gt; "Gaelic");</div><div class="line">         (3) php 5.4 起</div><div class="line">        $array = ["foo" =&gt; "bar","bar" =&gt; "foo",];</div><div class="line"></div><div class="line">    5. 使用list() 提取数组</div><div class="line">    $users = fopen("users.txt","r");</div><div class="line">    while ($line = fgets($users,4096)) &#123;</div><div class="line">        list($name, $occupation, $color) = explode("|", $line);</div><div class="line">        printf("Name: %s &lt;br /&gt;", $name);</div><div class="line">        printf("occupation: %s &lt;br /&gt;", $occupation);</div><div class="line">        printf("Favorite color: %s &lt;br /&gt;", $color);</div><div class="line">    &#125;</div><div class="line">    fclose($users);</div><div class="line"></div><div class="line">    6. print_r() 数组的友好输出</div><div class="line"></div><div class="line">    7. 添加或删除数组</div><div class="line">        $states = ["key" =&gt; "value","key1" =&gt; "value1"]</div><div class="line"></div><div class="line">        (1) 在数组头添加元素</div><div class="line">        array_unshift($states,"key","value");</div><div class="line"></div><div class="line">        (2) 在数组尾添加元素</div><div class="line">        array_push($states,"key","value");</div><div class="line"></div><div class="line">        (3) 在数组头删除元素</div><div class="line">        arrary_shift($states);</div><div class="line"></div><div class="line">        (4) 从数组尾删除元素</div><div class="line">        array_pop($states);</div><div class="line"></div><div class="line">    8. 定位数组元素</div><div class="line">    $states = ["key" =&gt; "value","key1" =&gt; "value1"]</div><div class="line">        (1) 判断元素是否存在  true|false</div><div class="line">            in_array("key",$states)</div><div class="line"></div><div class="line">        (2) 搜索关联数组</div><div class="line">            array_key_exists("key",$states)</div><div class="line"></div><div class="line">        (3) 搜索关联数组的值</div><div class="line">            array_search("vale",$states)</div><div class="line"></div><div class="line">        (4) 获取数组中所有key</div><div class="line">        $keys = array_keys($states);</div><div class="line">        print_r($keys)</div><div class="line">        OutPut----</div><div class="line">        Array([0] =&gt; key1 [1] ==&gt; key2)</div><div class="line"></div><div class="line">        (5) 获取数组中的所有value</div><div class="line">            values = array_values($states);</div><div class="line">            print_r($values)</div><div class="line">        OutPut----</div><div class="line">        Array([0] =&gt; value, [1] =&gt; value1)</div><div class="line"></div><div class="line">        (6) 获取当前数组key</div><div class="line">        //key()</div><div class="line">        while($key = key($states))&#123;</div><div class="line">            printf("$s &lt;/br",$key);</div><div class="line">            next($states)</div><div class="line">        &#125;</div><div class="line">        OutPut----</div><div class="line">        key</div><div class="line">        key1</div><div class="line"></div><div class="line">        (7) 获取当前数组的值</div><div class="line">        //current()</div><div class="line">        while($value = current($states))&#123;</div><div class="line">            printf("$s &lt;/br",$value);</div><div class="line">            next($states)</div><div class="line">        &#125;</div><div class="line">        OutPut----</div><div class="line">        value</div><div class="line">        value1</div><div class="line"></div><div class="line">        (8) 获取当前数组的键和值</div><div class="line">        //each</div><div class="line">        返回当前的键值对，并使指针推进一个位置。</div><div class="line">        $current_states =  each($states);</div><div class="line">        print_r($current_states)</div><div class="line">        OutPut----</div><div class="line">         Array([0] =&gt; key, [1] =&gt; value)</div><div class="line"></div><div class="line">        (9) 移动数组指针到下一个位置</div><div class="line">        //next($states)</div><div class="line">        $names = ["tom", "yip", "ljq"];</div><div class="line">        $name = next($names); //returns "yip"</div><div class="line"></div><div class="line">        (10) 移动指针到前一个位置</div><div class="line">        //prev($states)</div><div class="line"></div><div class="line">        (11) 将指针移到第一个位置</div><div class="line">        //rest($states)</div><div class="line"></div><div class="line">        (12) 将指针移动到最后一个数组位置</div><div class="line">        //end($states)</div><div class="line"></div><div class="line">        (13) 向函数传递数组值</div><div class="line">        //arry_walk()</div><div class="line"></div><div class="line">        (14) 确定数组的大小和唯一性</div><div class="line">           1. count() /sizeof() 统计大小</div><div class="line">           2. array_count_values() 统计出现频率</div><div class="line"></div><div class="line">        (15) 确定唯一的数组元素</div><div class="line">        array_unique()</div><div class="line"></div><div class="line">        (16) 数组排序</div><div class="line">        1. array_reverse($states)  逆序</div><div class="line">        2. sort() 由底到高</div><div class="line">        3. natsort 自然排序</div><div class="line"></div><div class="line">        （17）置换数组key和value的值</div><div class="line">        array_flip($states)</div><div class="line"></div><div class="line">        （18）合并数组</div><div class="line">            new_states = array_merge_recursive($states1, $states2);</div><div class="line"></div><div class="line">+ 面向对象</div><div class="line">    1. 构造函数</div><div class="line">    function __construct([arg,agr1,agr2.....])</div><div class="line"></div><div class="line">    调用父类的构造函数 </div><div class="line">    //parent</div><div class="line">    parent::__construct();</div><div class="line"></div><div class="line">    2. 析构函数</div><div class="line">    function __destruct()</div><div class="line"></div><div class="line">    3. 静态类型</div><div class="line">    self::$visitors++; //赋值</div><div class="line"></div><div class="line">    Visitor::getVisitors(); //引用</div><div class="line">    静态字段和方法需要使用self关键字和类名应用</div><div class="line">    **声明类属性或方法为静态，就可以不实例化类而直接访问。静态属性不能通过一个类已实例化的对象来访问（但静态方法可以）。**</div><div class="line"></div><div class="line">    4. instanceof关键字</div><div class="line">    $manager = new Employee();</div><div class="line">    .....</div><div class="line">    if ($manager instanceof Emplyee) echo "Yes";</div><div class="line">    //判断manager的对象是否为类Employee的实例</div><div class="line"></div><div class="line">    5. 辅助函数</div><div class="line">    （1） boolean class_exists(string class_name)</div><div class="line">        确定类是否存在</div><div class="line"></div><div class="line">    （2） string get_class(object object)</div><div class="line">        确定对象上下文</div><div class="line"></div><div class="line">    （3） array get_class_methods( class_name)</div><div class="line">        了解类方法：函数返回一个数组，其中包含class_name类中低昂以的所有方法名</div><div class="line"></div><div class="line">    （4）array get_declared_classes(void) </div><div class="line">        了解类字段:返回关联数组，包含object可用的字段和其值</div><div class="line"></div><div class="line">    （5）string get_parent_class(object)</div><div class="line">        确定对象的父类</div><div class="line"></div><div class="line">    （6）boolean interface_exists(string interface_name)</div><div class="line">        确定一个接口是否存在</div><div class="line">    </div><div class="line">    （7）boolean is_a(object object,string class_name)</div><div class="line">        确定对象类型</div><div class="line">    （8）boolean is_subclass_of(object object, string class_name)</div><div class="line">        确定对象的子类类型</div><div class="line">    （9）boolean method_exists(object object,string method_name)</div><div class="line">        确定方法是否存在</div><div class="line"></div><div class="line">    6.自动加载对象</div><div class="line">    old--&gt;</div><div class="line">    require_once("class/Books.class.php")</div><div class="line">    require_once("class/Employees.class.php")</div><div class="line"></div><div class="line">    new--&gt;</div><div class="line">    function __autoload($class)&#123;</div><div class="line">        require_once("class/$class.class.php")</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    自动加载通过定义特殊的__autoload函数，当引用未在脚本中定义的类时，自动调用这个函数。</div><div class="line"></div><div class="line">+ 高级oop特性</div><div class="line">    1. 对象克隆</div><div class="line">    destinationObject = clone targetObject;</div><div class="line">    </div><div class="line">    1.1 __clone() 方法</div><div class="line">        function __clone()&#123;</div><div class="line">            $this-&gt;tiecolor = "blue";</div><div class="line">        &#125;</div><div class="line">        //在执行clone时会自动调用__clone()方法</div><div class="line"></div><div class="line">    2. 继承</div><div class="line">    class child_class extends parent_class&#123;</div><div class="line">        function new_metchod()&#123;</div><div class="line">            print "new_metchod"</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    2.1 继承时构造函数的处理</div><div class="line">        （1）子类没有构造函数，父类有  会执行父类的</div><div class="line">        （2）子类有构造函数  不论父类有没有 都会执行子类的</div><div class="line">        （3）如果想执行父类的构造函数 子类的构造函数如下写</div><div class="line">            function __construct($name)&#123;</div><div class="line">                parent::__construct($name);</div><div class="line">                echo "&lt;p&gt; child class construct function&lt;/p&gt;"</div><div class="line">            &#125;</div><div class="line">        （4）如果向多个父类的构造函数都要执行，可以使用显式的 引用</div><div class="line"></div><div class="line">    3. 接口 （接口是为了不支持多重继承而设置的，python支持多重继承，所以没有接口）</div><div class="line">        接口：声明了所需的函数和常量，但不指定如何实现。</div><div class="line">        interf#### php学习</div><div class="line">+ php中显示错误信息 修改php.ini 如下</div><div class="line"></div><div class="line">    1. display_errors = On</div><div class="line"></div><div class="line">    2. error_reporting = E_ALL &amp;~E_NOTICE</div><div class="line"></div><div class="line">    在apache中</div><div class="line"></div><div class="line">    1.php_flag display_errors On</div><div class="line"></div><div class="line">    2.php_alue error_reporting 2039</div><div class="line"></div><div class="line">+ 字符串输出</div><div class="line">    1. echo | print</div><div class="line">        &gt;echo "string"</div><div class="line"></div><div class="line">        &gt;print "string"</div><div class="line"></div><div class="line">    2. printf</div><div class="line">        &gt;printf("my love is %s", 'ljq')</div><div class="line"></div><div class="line">    3. sprinf</div><div class="line">        &gt;$str = printf("my love is %s", 'ljq')</div><div class="line"></div><div class="line">        &gt;把字符串赋值给变量，而不是打印输出</div><div class="line">+ 类型相关</div><div class="line">    1. 获取类型</div><div class="line">        string gettype(mixed var)</div><div class="line">    2. 转换类型</div><div class="line">        boolean settype(mixed var, string type)</div><div class="line"></div><div class="line">+ echo 和 print的区别</div><div class="line"></div><div class="line">    echo 可以输出多个参数</div><div class="line"></div><div class="line">    void echo(string argument1[,....string argumentN])</div><div class="line">+ var_dump()</div><div class="line">   void var_dump ( mixed $expression [, mixed $... ] )</div><div class="line"></div><div class="line">   显示变量信息，方便debug使用</div><div class="line"></div><div class="line">+ 控制语句</div><div class="line">    1. if语句</div><div class="line">    ``` php</div><div class="line"></div><div class="line">    if (condition) &#123;</div><div class="line">        # code...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    if (condition) echo "";</div><div class="line"></div><div class="line">    if (condition) &#123;</div><div class="line">        # code...</div><div class="line">    &#125; else &#123;</div><div class="line">        # code...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    $retVal = (condition) ? a : b ;</div></pre></td></tr></table></figure>
+<p>  2.switch 语句</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">switch (variable) &#123;</div><div class="line">    case &apos;value&apos;:</div><div class="line">        # code...</div><div class="line">        break;</div><div class="line"></div><div class="line">    default:</div><div class="line">        # code...</div><div class="line">        break;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>  3.循环语句</p>
+  <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">while</span> ($a &lt;= <span class="number">10</span>) &#123;</div><div class="line">    <span class="comment"># code...</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">do</span> &#123;</div><div class="line">    <span class="comment"># code...</span></div><div class="line">&#125; <span class="keyword">while</span> ($a &lt;= <span class="number">10</span>);</div><div class="line"></div><div class="line"><span class="keyword">for</span> ($i=<span class="number">0</span>; $i &lt; ; $i++) &#123;</div><div class="line">    <span class="comment"># code...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>  4.foreach语句</p>
+  <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">$links = <span class="keyword">array</span>(<span class="string">"a.cn"</span>,<span class="string">"b.cn"</span>,<span class="string">"c.cn"</span>)</div><div class="line"><span class="keyword">foreach</span> ($links <span class="keyword">as</span> $link) &#123;</div><div class="line">    <span class="keyword">echo</span> $link,<span class="string">'&lt;/br&gt;'</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$links = <span class="keyword">array</span>(<span class="string">'百度'</span> =&gt; <span class="string">'baidu.com'</span> ,<span class="string">'谷歌'</span> =&gt; <span class="string">'google.com'</span>,</div><div class="line"><span class="string">'搜狗'</span> =&gt; <span class="string">'sougou.com'</span>);</div><div class="line"></div><div class="line"><span class="keyword">foreach</span> ($links <span class="keyword">as</span> $title =&gt; $link) &#123;</div><div class="line">    <span class="keyword">echo</span> $title, $link;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>  4.文件包含语句</p>
+  <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">include</span> <span class="string">"lib/php/init.inc.php"</span></div><div class="line"><span class="keyword">require_once</span> <span class="string">"lib/php/init.inc.php"</span></div><div class="line"></div><div class="line">条件<span class="keyword">include</span> / <span class="keyword">require</span></div><div class="line"><span class="keyword">if</span> (condition) &#123;</div><div class="line">    <span class="keyword">include</span> <span class="string">"lib/php/true.php"</span></div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">include</span> <span class="string">"lib/php/fail.php"</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">只包含一次 <span class="keyword">include_once</span> /  <span class="keyword">require_once</span></div><div class="line"><span class="keyword">include_once</span>()</div><div class="line"><span class="keyword">require_once</span>()</div></pre></td></tr></table></figure>
+</li>
+<li><p>函数 function</p>
+  <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="number">1.</span> 基本函数</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">FunctionName</span><span class="params">($value=<span class="string">''</span>)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="comment"># code...</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="number">2.</span>按引用传递参数</div><div class="line">$cost = <span class="number">20.99</span>;</div><div class="line">$tax = <span class="number">0.0575</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">calculateCost</span><span class="params">(&amp;$cost, $tax)</span></span></div><div class="line">&#123;</div><div class="line">    $cost = $cost + ($cost * $tax);</div><div class="line">    $tax += <span class="number">4</span>;</div><div class="line">&#125;</div><div class="line">calculateCost($cost,$tax);</div><div class="line">printf(<span class="string">"Tax is %01.2f%%&lt;br /&gt;"</span>,$tax*<span class="number">100</span>);</div><div class="line">printf(<span class="string">"Cost is $%01.2f"</span>,$cost);</div><div class="line"></div><div class="line"><span class="number">3.</span>返回多个值</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">retrieveUserProfile</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    $user[] = <span class="string">"Jason"</span>;</div><div class="line">    $user[] = <span class="string">"jason@example.com"</span>;</div><div class="line">    $user[] = <span class="string">"English"</span>;</div><div class="line">    <span class="keyword">return</span> $user;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="keyword">list</span>($name,$email,$language) = retrieveUserProfile();</div><div class="line"> <span class="keyword">echo</span> <span class="string">"Name:$name, email:$email, language:$language"</span>;</div></pre></td></tr></table></figure>
+</li>
+<li><p>数组<br>  php中的数组实际上包含了python的字典<br>  ``` php</p>
+<ul>
+<li>创建数组</li>
+</ul>
+<ol>
+<li><p>$state[0] = “Delaware”;</p>
+</li>
+<li><p>自动创建<br>$state[] = “huawin”;<br>$state[] = “yip”;<br>$state[] = “tom”;</p>
+</li>
+<li><p>创建关联数组<br> $state[‘devops’] = ‘tom’<br> $state[‘dev’] = ‘yip’</p>
+<p>4.使用arrary创建<br> （1）索引数组</p>
+<pre><code>$languages = arrary(&quot;english&quot;,&quot;Gaelic&quot;,&quot;Spanish&quot;);
+</code></pre><p> （2）关联数组</p>
+<pre><code>$languages = array(&quot;Spain&quot; =&gt; &quot;Spanish&quot;,&quot;Treland&quot; =&gt; &quot;Gaelic&quot;);
+</code></pre><p>  (3) php 5.4 起<br> $array = [“foo” =&gt; “bar”,”bar” =&gt; “foo”,];</p>
+</li>
+<li><p>使用list() 提取数组<br>$users = fopen(“users.txt”,”r”);<br>while ($line = fgets($users,4096)) {<br> list($name, $occupation, $color) = explode(“|”, $line);<br> printf(“Name: %s <br>“, $name);<br> printf(“occupation: %s <br>“, $occupation);<br> printf(“Favorite color: %s <br>“, $color);<br>}<br>fclose($users);</p>
+</li>
+<li><p>print_r() 数组的友好输出</p>
+</li>
+<li><p>添加或删除数组<br> $states = [“key” =&gt; “value”,”key1” =&gt; “value1”]</p>
+<p> (1) 在数组头添加元素<br> array_unshift($states,”key”,”value”);</p>
+<p> (2) 在数组尾添加元素<br> array_push($states,”key”,”value”);</p>
+<p> (3) 在数组头删除元素<br> arrary_shift($states);</p>
+<p> (4) 从数组尾删除元素<br> array_pop($states);</p>
+</li>
+<li><p>定位数组元素<br>$states = [“key” =&gt; “value”,”key1” =&gt; “value1”]<br> (1) 判断元素是否存在  true|false</p>
+<pre><code>in_array(&quot;key&quot;,$states)
+</code></pre><p> (2) 搜索关联数组</p>
+<pre><code>array_key_exists(&quot;key&quot;,$states)
+</code></pre><p> (3) 搜索关联数组的值</p>
+<pre><code>array_search(&quot;vale&quot;,$states)
+</code></pre><p> (4) 获取数组中所有key<br> $keys = array_keys($states);<br> print_r($keys)<br> OutPut—-<br> Array([0] =&gt; key1 [1] ==&gt; key2)</p>
+<p> (5) 获取数组中的所有value</p>
+<pre><code>values = array_values($states);
+print_r($values)
+</code></pre><p> OutPut—-<br> Array([0] =&gt; value, [1] =&gt; value1)</p>
+<p> (6) 获取当前数组key<br> //key()<br> while($key = key($states)){</p>
+<pre><code>printf(&quot;$s &lt;/br&quot;,$key);
+next($states)
+</code></pre><p> }<br> OutPut—-<br> key<br> key1</p>
+<p> (7) 获取当前数组的值<br> //current()<br> while($value = current($states)){</p>
+<pre><code>printf(&quot;$s &lt;/br&quot;,$value);
+next($states)
+</code></pre><p> }<br> OutPut—-<br> value<br> value1</p>
+<p> (8) 获取当前数组的键和值<br> //each<br> 返回当前的键值对，并使指针推进一个位置。<br> $current_states =  each($states);<br> print_r($current_states)<br> OutPut—-<br>  Array([0] =&gt; key, [1] =&gt; value)</p>
+<p> (9) 移动数组指针到下一个位置<br> //next($states)<br> $names = [“tom”, “yip”, “ljq”];<br> $name = next($names); //returns “yip”</p>
+<p> (10) 移动指针到前一个位置<br> //prev($states)</p>
+<p> (11) 将指针移到第一个位置<br> //rest($states)</p>
+<p> (12) 将指针移动到最后一个数组位置<br> //end($states)</p>
+<p> (13) 向函数传递数组值<br> //arry_walk()</p>
+<p> (14) 确定数组的大小和唯一性</p>
+<pre><code>1. count() /sizeof() 统计大小
+2. array_count_values() 统计出现频率
+</code></pre><p> (15) 确定唯一的数组元素<br> array_unique()</p>
+<p> (16) 数组排序</p>
+<ol>
+<li>array_reverse($states)  逆序</li>
+<li>sort() 由底到高</li>
+<li><p>natsort 自然排序</p>
+<p>（17）置换数组key和value的值<br>array_flip($states)</p>
+<p>（18）合并数组<br> new_states = array_merge_recursive($states1, $states2);</p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>面向对象</p>
+<ol>
+<li><p>构造函数<br>function __construct([arg,agr1,agr2…..])</p>
+<p>调用父类的构造函数<br>//parent<br>parent::__construct();</p>
+</li>
+<li><p>析构函数<br>function __destruct()</p>
+</li>
+<li><p>静态类型<br>self::$visitors++; //赋值</p>
+<p>Visitor::getVisitors(); //引用<br>静态字段和方法需要使用self关键字和类名应用</p>
+</li>
+<li><p>instanceof关键字<br>$manager = new Employee();<br>…..<br>if ($manager instanceof Emplyee) echo “Yes”;<br>//判断manager的对象是否为类Employee的实例</p>
+</li>
+<li><p>辅助函数<br>（1） boolean class_exists(string class_name)<br> 确定类是否存在</p>
+<p>（2） string get_class(object object)<br> 确定对象上下文</p>
+<p>（3） array get_class_methods( class_name)<br> 了解类方法：函数返回一个数组，其中包含class_name类中低昂以的所有方法名</p>
+<p>（4）array get_declared_classes(void)<br> 了解类字段:返回关联数组，包含object可用的字段和其值</p>
+<p>（5）string get_parent_class(object)<br> 确定对象的父类</p>
+<p>（6）boolean interface_exists(string interface_name)<br> 确定一个接口是否存在</p>
+<p>（7）boolean is_a(object object,string class_name)<br> 确定对象类型<br>（8）boolean is_subclass_of(object object, string class_name)<br> 确定对象的子类类型<br>（9）boolean method_exists(object object,string method_name)<br> 确定方法是否存在</p>
+<p>6.自动加载对象<br>old–&gt;<br>require_once(“class/Books.class.php”)<br>require_once(“class/Employees.class.php”)</p>
+<p>new–&gt;<br>function __autoload($class){<br> require_once(“class/$class.class.php”)<br>}</p>
+<p>自动加载通过定义特殊的__autoload函数，当引用未在脚本中定义的类时，自动调用这个函数。</p>
+</li>
+</ol>
+</li>
+<li><p>高级oop特性</p>
+<ol>
+<li><p>对象克隆<br>destinationObject = clone targetObject;</p>
+<p>1.1 <strong>clone() 方法<br> function </strong>clone(){</p>
+<pre><code>$this-&gt;tiecolor = &quot;blue&quot;;
+</code></pre><p> }<br> //在执行clone时会自动调用__clone()方法</p>
+</li>
+<li><p>继承<br>class child_class extends parent_class{<br> function new_metchod(){</p>
+<pre><code>print &quot;new_metchod&quot;
+</code></pre><p> }<br>}</p>
+<p>2.1 继承时构造函数的处理<br> （1）子类没有构造函数，父类有  会执行父类的<br> （2）子类有构造函数  不论父类有没有 都会执行子类的<br> （3）如果想执行父类的构造函数 子类的构造函数如下写</p>
+<pre><code>function __construct($name){
+    parent::__construct($name);
+    echo &quot;&lt;p&gt; child class construct function&lt;/p&gt;&quot;
+}
+</code></pre><p> （4）如果向多个父类的构造函数都要执行，可以使用显式的 引用</p>
+</li>
+<li><p>接口 （接口是为了不支持多重继承而设置的，python支持多重继承，所以没有接口）<br> 接口：声明了所需的函数和常量，但不指定如何实现。<br> interface interface_name{</p>
+<pre><code>function method_name1();
+</code></pre><p> }<br> class Class_Name implements interface_name{</p>
+<pre><code>function method_name1()
+{
+    //接口方法的实现
+}
+</code></pre><p> }</p>
+<p>3.1 实现多个接口<br> interface IEmployee {…}<br> interface IDeveloper {…}<br> interface IPillage {…}</p>
+<p> class Employee implements IEmployee， IDeveloper， iPillage{</p>
+<pre><code>...
+</code></pre><p> }</p>
+<p> class Contractor implements IEmployee， IDeveloper{</p>
+<pre><code>...
+</code></pre><p> }</p>
+</li>
+<li><p>抽象类<br> 抽象类：不能实例化的类，只能作为i由其他类继承的基类。</p>
+<p> abstract class Class_Name<br> {</p>
+<pre><code>// insert attribute definition here
+// insert method definition here
+</code></pre><p> }</p>
+</li>
+<li><p>命名空间介绍 （python 不支持 namespace这种写法）<br> namespace Foo\Bar\subnamespace;<br> namespace Foo\Bar</p>
+<p> 使用：<br> /<em> 非限定名称 </em>/        foo();<br> /<em> 限定名称 </em>/          subnamespace\foo();<br> /<em> 完全限定名称 </em>/       \Foo\Bar\foo();<br> //相当与linux 目录树的概念</p>
+<p>6.异常处理ace interface_name{</p>
+<pre><code>function method_name1();
+</code></pre><p> }<br> class Class_Name implements interface_name{</p>
+<pre><code>function method_name1()
+{
+    //接口方法的实现
+}
+</code></pre><p> }</p>
+<p>3.1 实现多个接口<br> interface IEmployee {…}<br> interface IDeveloper {…}<br> interface IPillage {…}</p>
+<p> class Employee implements IEmployee， IDeveloper， iPillage{</p>
+<pre><code>...
+</code></pre><p> }</p>
+<p> class Contractor implements IEmployee， IDeveloper{</p>
+<pre><code>...
+</code></pre><p> }</p>
+</li>
+<li><p>抽象类<br> 抽象类：不能实例化的类，只能作为i由其他类继承的基类。</p>
+<p> abstract class Class_Name<br> {</p>
+<pre><code>// insert attribute definition here
+// insert method definition here
+</code></pre><p> }</p>
+</li>
+<li><p>命名空间介绍 （python 不支持 namespace这种写法）<br> namespace Foo\Bar\subnamespace;<br> namespace Foo\Bar</p>
+<p> 使用：<br> /<em> 非限定名称 </em>/        foo();<br> /<em> 限定名称 </em>/          subnamespace\foo();<br> /<em> 完全限定名称 </em>/       \Foo\Bar\foo();<br> //相当与linux 目录树的概念</p>
+</li>
+</ol>
+</li>
+<li><p>异常处理</p>
+<ol>
+<li><p>配置指令<br> 修改php.ini</p>
+</li>
+<li><p>异常处理<br> （1）默认构造函数</p>
+<pre><code>throw new Exception();
+</code></pre><p> （2） 重载构造函数</p>
+<pre><code>throw new Exception(&quot;Something bad just happened&quot;,4);
+</code></pre><p> （3） 方法</p>
+<pre><code>- getMessage() 返回传递给构造函数的消息。
+- getCode() 返回传递给构造函数的错误。
+- getLine() 返回抛出异常的行号。
+- getFile() 返回抛出异常的文件名。
+- getTrace() 返回一个数组,其中包括出现错误的上下文的有关信息。该数组包括 文件名、行号、函数名和函数参数。
+- getTraceAsString() 返回信息同getTrace(),只是返回信息时一个字符串而不是数组。
+</code></pre><p> （4）产生一个异常</p>
+<pre><code>try {
+    $fh = fopen(&quot;contacts.txt&quot;,&quot;r&quot;);
+    if (! $fh) {
+        throw new Exception(&quot;Could not open the file!&quot;);
+    }
+}
+catch (Exception $e){
+    echo &quot;Error (File: &quot;.$e-&gt;getFile().&quot;, line &quot;.$e-&gt;getLine().&quot;): &quot;.$e-&gt;getMessage();
+}
+</code></pre><p> (5) 扩展异常类</p>
+<pre><code>/**
+* xxx.txt
+* 1,Could not connnect to the database!
+* 2,Incorrect password. Please try again.
+* 3.Username not found.
+*/
+
+class My_Exception extends Exception
+{ 
+    function __construct($language,$errorcode)
+    {
+        $this-&gt;language = $language;
+        $this-&gt;errorcode = $errorcode;
+    }
+    public function getMessageMap()
+    {
+        $errors = file(&quot;errors/&quot;.$this-&gt;language.&quot;.txt&quot;);
+        foreach ($errors as $error) {
+            list($key,$value) = explode(&quot;,&quot;,$error,2);
+            $errorArray[$key] = $value;
+        }
+        return $errorArray[$this-&gt;errorcode];
+    }
+}
+
+try{
+    throw new My_Exception(&quot;english&quot;, 4);
+}
+catch (My_Exception $e){
+    echo $e-&gt;getMessageMap();
+}
+</code></pre><p> (6) 捕获多个异常</p>
+</li>
+</ol>
+</li>
+<li><p>字符串和正则表达式</p>
+<ol>
+<li>POSIX<br> （1） ereg() //搜索</li>
+</ol>
+</li>
+<li><p>字符处理</p>
+<ol>
+<li>ltrim() 从字符开始 裁剪字符。空格等</li>
+<li>rtrim() 结束字符开始 裁剪字符。空格等</li>
+<li>trim() 从两端 裁剪字符。空格等</li>
+</ol>
+</li>
+<li><p>处理文件和操作系统</p>
+<ol>
+<li><p>文件和目录<br> $path = “/home/www/data/users.txt”<br> （1） string basename($path)      ===&gt; users.txt //获取文件名</p>
+<p> （2） string dirname($path)       ===&gt; /home/www/data   //获取目录名</p>
+<h2 id="（3）-array-pathinfo-path"><a href="#（3）-array-pathinfo-path" class="headerlink" title=" （3） array pathinfo($path)       "></a> （3） array pathinfo($path)       </h2><pre><code>$pathinfo = pathinfo($path) 
+pathinfo[dirname] ===&gt; /home/www/data
+pathinfo[basename] ===&gt; users.txt
+pathinfo[extension] ===&gt; txt
+</code></pre></li>
+<li><p>计算文件、目录和磁盘大小<br> （1） int filesize(string filename)</p>
+<pre><code>//计算指定文件的大小，以字节为单位。
+</code></pre><p> (2) float disk_free_space(string directory)</p>
+<pre><code>//磁盘可用空间 以字节为单位
+$drive = &quot;/usr&quot;
+disk_free_space($drive)
+</code></pre><p> (3) float disk_total_space(string directory)</p>
+<pre><code>//计算磁盘总量
+disk_total_space($drive)
+</code></pre><p> (4) 计算目录大小 (标准函数没给,需要自己写) </p>
+</li>
+<li><p>确定访问和修改时间<br> （1） 确定文件的最后访问时间<br> （2） 确定文件的最后改变时间<br> （3） 确定文件的最后修改时间</p>
+</li>
+<li><p>执行shell命令</p>
+<ol>
+<li><p>删除目录<br> int rmdir(string dirname)</p>
+</li>
+<li><p>重命名文件<br> boolean rename(string oldname, string newname)</p>
+</li>
+<li><p>创建文件<br> int touch(string filename)</p>
+</li>
+</ol>
+</li>
+<li><p>调用系统命令</p>
+<ol>
+<li>exec()   //可选返回结果</li>
+<li>system()  //直接返回结果</li>
+<li>反引号执行命令<br> $result = <code>date</code>;</li>
+<li>可代替反引号<br> $result = shell_exec(“date”);</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>PEAR - PHP Extension and Application Repository</p>
+<ol>
+<li><p>Validate_US<br>&lt;?php<br> include “Validate/US.php”<br> $validate = new Validate_US();<br> echo $validate-&gt;phoneNumber(“614-999-9999”) ? “Valid!” ： “Not valid!”<br>?&gt;</p>
+<p>2.使用PEAR包管理器<br>（1）查看以及安装的pear包<br> %&gt; pear list</p>
+<p>（2）了解信息<br> %&gt; pear info Console_Getopt</p>
+<p>(3) 安装<br> %&gt;pear install Auth</p>
+<p>(4) 使用<br> require_once(“Numbers/Roman.php”)</p>
+</li>
+</ol>
+</li>
+<li><p>表单</p>
+<ol>
+<li>获取表单<br> if (isset($_POST[‘submit’]))<br> {<pre><code>$name = htmlentities($_POST[&apos;name&apos;]);
+</code></pre> }</li>
+<li><p>获取多值表单<br> if (isset($_POST[‘submit’]))<br> {</p>
+<pre><code>foreach($_POST[&apos;language&apos; AS $language]){
+    $language = htmlentities($language);
+    echo &quot;$language&lt;br /&gt;&quot;;
+}
+</code></pre><p> }</p>
+</li>
+<li><p>HTML_QuickForm2<br> (1) 安装</p>
+<pre><code>1. wget http://download.pear.php.net/package/HTML_QuickForm2-2.0.2.tgz 
+   wget http://download.pear.php.net/package/HTML_Common2-2.1.1.tgz  (QuickForm2的依赖)
+2. 解压后放在  /usr/share/pear/HTML 中或直接引用
+
+3. 简单帮助 
+（http://pear.php.net/manual/en/package.html.html-quickform2.tutorial.php）
+（https://pear.php.net/manual/en/package.html.html-quickform2.examples.php）
+</code></pre></li>
+</ol>
+</li>
+<li><p>身份验证</p>
+<ol>
+<li><p>硬编码验证<br> &lt;?php<br> if (!isset($_SERVER[‘PHP_AUTH_USER’]) || ($_SERVER[‘PHP_AUTH_PW’] != ‘ljq’) ) {</p>
+<pre><code>header(&apos;WWW-Authenticate: Basic realm=&quot;My Realm&quot;&apos;);
+header(&apos;HTTP/1.0 401 Unauthorized&apos;);
+echo &apos;Text to send if user hits Cancel button&apos;;
+exit;
+</code></pre><p> } else {</p>
+<pre><code>echo &quot;&lt;p&gt;Hello {$_SERVER[&apos;PHP_AUTH_USER&apos;]}.&lt;/p&gt;&quot;;
+echo &quot;&lt;p&gt;You entered {$_SERVER[&apos;PHP_AUTH_PW&apos;]} as your password.&lt;/p&gt;&quot;;
+</code></pre><p> }<br> ?&gt;<br> //多用户<br> &lt;?php</p>
+<p> $valid_passwords = array (“mario” =&gt; “carbonell”);<br> $valid_users = array_keys($valid_passwords);</p>
+<p> $user = $_SERVER[‘PHP_AUTH_USER’];<br> $pass = $_SERVER[‘PHP_AUTH_PW’];</p>
+<p> $validated = (in_array($user, $valid_users)) &amp;&amp; ($pass == $valid_passwords[$user]);</p>
+<p> if (!$validated) {<br> header(‘WWW-Authenticate: Basic realm=”My Realm”‘);<br> header(‘HTTP/1.0 401 Unauthorized’);<br> die (“Not authorized”);<br> }</p>
+<p> // If arrives here, is a valid user.<br> echo “</p><p>Welcome $user.</p>“;<br> echo “<p>Congratulation, you are into the system.</p>“;<p></p>
+<p> ?&gt;</p>
+</li>
+<li><p>基于文本的身份验证</p>
+</li>
+<li><p>基于数据库的身份验证</p>
+</li>
+<li><p>基于ip的身份验证</p>
+</li>
+<li><p>利用PEAR：Auth_HTTP<br> 示例： <a href="https://pear.php.net/manual/en/package.authentication.auth-http.auth-http.example2.php" target="_blank" rel="external">https://pear.php.net/manual/en/package.authentication.auth-http.auth-http.example2.php</a></p>
+</li>
+<li><p>用户管理<br>（1）使用CrackLib测试密码的复杂度</p>
+<p>（2）一次性URL和密码恢复</p>
+<ol>
+<li><p>生成伪随机值<br> $id = md5(uniqid(rand(),1));</p>
+</li>
+<li><p>把这个伪造的随机值和用户账号关联，发送邮件告诉用户这个随机值<br> $query = “UPDATE logins SET hash=’$id’ WHERE email=’$address’”;</p>
+</li>
+<li><p>用户访问这个随机值，重置密码<br> $query = “UPDATE logins SET pswd=’$pswd’ WHERE hash=’$id’”;</p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>处理文件上传</p>
+<ol>
+<li>使用PEAR: HTTP_Upload<br>参考：<a href="https://pear.php.net/manual/en/package.http.http-upload.examples.php" target="_blank" rel="external">https://pear.php.net/manual/en/package.http.http-upload.examples.php</a></li>
+</ol>
+</li>
+<li><p>PHP网络管理</p>
+<ol>
+<li>fsockopen() 创建socket通信连接</li>
+</ol>
+</li>
+<li><p>会话处理器  （是个字典结构,session_id是字典名，里面的变量时K/v ）</p>
+<ol>
+<li><p>cookie<br>当用户访问网站时，服务器将用户的状态信息存储在本地session文件中,并把session_id发送给浏览器，浏览器保存session_id为本地的cookie Value。<br>当用户对另一个页面执行请求时，服务器向用户获取该session_id，使用这个session_id找到存储的信息来验证,或获取用户的状态。</p>
+</li>
+<li><p>cookie中的参数<br>服务器返回给的cookie  —&gt; Response Cookies<br>客户端请求的cookie  —&gt; Request Cookies</p>
+<p>cookie 中可以设置的参数<br>Name    Value   Domain  Path   Expire/Max-Age   Size    HTTP    Secure  SameSite</p>
+</li>
+<li><p>默认的cookie的发放方式<br>下面这个几个命名都是一个东西，只是在不同场景中叫法不一样而已<br>(浏览器)Cookies Value == session_id  ==  SID == PHPSESSID</p>
+</li>
+<li><p>浏览器请求页面,如果本地储存的有cookie Value 会在http请求头部携带一起请求,否则 session_id = Null</p>
+<p> 浏览器 请求  Request Headers （本地保存有 session_id时）</p>
+<pre><code>GET /php/index.php HTTP/1.1
+Host: 127.0.0.1
+Cookie: PHPSESSID=222226666
+</code></pre></li>
+<li><p>服务器页面 session_start()<br> （1） 如果收到浏览器发过来的cookie Value,不向浏览器下发 cookie Value<br> （2） 如果没有收到浏览器发送的cookie Value，就初始化一个session_id 给浏览器下发 cookie Value</p>
+<pre><code>服务器返回 Response Headers （服务器下发 session_id时）
+    HTTP/1.1 200 OK
+    X-Powered-By: PHP/5.6.24
+    Set-Cookie: PHPSESSID=222226666; path=/
+    Expires: Thu, 19 Nov 1981 08:52:00 GMT
+    Server: lighttpd/1.4.39
+</code></pre></li>
+<li><p>服务器初始化 session_id</p>
+<ol>
+<li><p>php.ini中<br>session.save_handler = files //指定了 session存放形式 文件<br>session.save_path = “/tmp”  //指定了 session_id文件存放路径</p>
+</li>
+<li><p>session文件存放路径<br>会根据session_id 创建session文件,比如 session_id == 222226666<br>默认session文件为<br>/tmp/sess_222226666</p>
+</li>
+<li><p>如果session中没有绑定任何变量，默认初始化的是个空文件</p>
+</li>
+</ol>
+</li>
+<li><p>注册会话变量<br> 在服务端执行<br> $_SESSION[‘username’] = ‘ljq’;<br> 等操作<br> 其实是向session文件中写入<br> $&gt;cat /tmp/sess_222226666<br> username|s:3:”ljq11111”;#<br> （这种方式很像个字典类型，文件名是字典名，里面储存的是key/Value）</p>
+</li>
+<li><p>获取变量<br> 因为浏览器，会自动把session_id 发给服务器，相当于发送请求时  先告诉服务器他是谁<br> 服务器 获取浏览器发送的session<em>id 会找到 /tmp/sess</em>$session_id文件<br> 如果页面中是 echo “$<em>SESSION[‘username’]”<br> 这时服务器会 从/tmp/sess</em>$session_id 中获取 username </p>
+</li>
+<li><p>销毁session<br> session<em>unset()   —-&gt; 清空 /tmp/sess</em>$session_id 使变为空文件<br> session<em>destroy()  —&gt; 删除 /tmp/sess</em>$session_id</p>
+<p> 注意：不管使用任何，浏览器中的cookie Value不会被销毁</p>
+</li>
+<li><p>设置和获取session_id<br> session_id(“222226666”)  //指定session_id 为222226666</p>
+</li>
+<li><p>撤销会话变量<br> session_unset($_SESSION[‘username’]);<br> //这只会删除 username这个key的值 </p>
+</li>
+<li><p>自定义session储存方法 比如：redis </p>
+</li>
+</ol>
+</li>
+<li><p>模版化 Smary |symfony 采用的 twig | Laravel 采用的 Blade </p>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/php/" rel="tag"># php</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/11/sqlalchemy/" rel="next" title="sqlalchemy">
+                <i class="fa fa-chevron-left"></i> sqlalchemy
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/14/pygraphviz/" rel="prev" title="pygraphviz-画出程序调用栈图">
+                pygraphviz-画出程序调用栈图 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/07/14/php/"
+           data-title="php学习" data-url="http://www.rhel.cc/2016/07/14/php/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xw819.com1.z0.glb.clouddn.com/RH_CertifiedArchitect_RGB.svg"
+               alt="kikiyou" />
+          <p class="site-author-name" itemprop="name">kikiyou</p>
+           
+              <p class="site-description motion-element" itemprop="description">越努力越幸运</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">204</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yewang15215" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.quora.com/profile/King-Yip-3" target="_blank" title="Quora">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Quora
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/wutongyip" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.douban.com/people/yewang15215/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.guokr.com/i/0121652172/" target="_blank" title="果壳">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  果壳
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/hellokingyip" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/KingYip15215" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/kingyip15215" target="_blank" title="新浪微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  新浪微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/sindresorhus/awesome" title="Awesome" target="_blank">Awesome</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#php学习"><span class="nav-number">1.</span> <span class="nav-text">php学习</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#（3）-array-pathinfo-path"><span class="nav-number"></span> <span class="nav-text"> （3） array pathinfo($path)       </span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kikiyou</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"liveandlearn"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

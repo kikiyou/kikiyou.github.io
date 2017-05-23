@@ -1,0 +1,911 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Buildout
+用Buildout来构建Python项目Tuesday, March 12, 2013什么是Buildoutalt Buildout(Remixed by Matt Hamilton, original from http://xkcd.com/303)
+Buildout是一个基于Python的构建工具, 通过一个配置文件，可以从多个部分创建、组装并部署你的应用，即使应用包含了非">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Monkey">
+<meta property="og:url" content="http://www.rhel.cc/2017/05/23/buildout构建项目/index.html">
+<meta property="og:site_name" content="Monkey">
+<meta property="og:description" content="Buildout
+用Buildout来构建Python项目Tuesday, March 12, 2013什么是Buildoutalt Buildout(Remixed by Matt Hamilton, original from http://xkcd.com/303)
+Buildout是一个基于Python的构建工具, 通过一个配置文件，可以从多个部分创建、组装并部署你的应用，即使应用包含了非">
+<meta property="og:updated_time" content="2016-12-15T04:11:49.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Monkey">
+<meta name="twitter:description" content="Buildout
+用Buildout来构建Python项目Tuesday, March 12, 2013什么是Buildoutalt Buildout(Remixed by Matt Hamilton, original from http://xkcd.com/303)
+Buildout是一个基于Python的构建工具, 通过一个配置文件，可以从多个部分创建、组装并部署你的应用，即使应用包含了非">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.rhel.cc/2017/05/23/buildout构建项目/"/>
+
+
+
+
+
+  <title> | Monkey</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-69625009-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?1d19ec01ee75454338de4be42f062626";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Monkey</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Think! And Think Again</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'qXreyHC_EX5zr5PLMxgp','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.rhel.cc/2017/05/23/buildout构建项目/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="kikiyou">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://7xw819.com1.z0.glb.clouddn.com/RH_CertifiedArchitect_RGB.svg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Monkey">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-23T11:31:20+08:00">
+                2017-05-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/05/23/buildout构建项目/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/23/buildout构建项目/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Buildout</p>
+<p>用Buildout来构建Python项目<br>Tuesday, March 12, 2013<br>什么是Buildout<br>alt Buildout<br>(Remixed by Matt Hamilton, original from <a href="http://xkcd.com/303" target="_blank" rel="external">http://xkcd.com/303</a>)</p>
+<p>Buildout是一个基于Python的构建工具, 通过一个配置文件，可以从多个部分创建、组装并部署你的应用，即使应用包含了非Python的组件，Buildout也能够胜任. Buildout不但能够像setuptools一样自动更新或下载安装依赖包，而且还能够像virtualenv一样，构建一个封闭隔离的开发环境.</p>
+<p>初始化Buildout<br>首先我们新建一个目录来共享Buildout配置和文件:</p>
+<p>~/Projects$ mkdir buildout<br>~/Projects$ cd buildout<br>下载一个2.0的bootstrap.py脚本:</p>
+<p>~/Projects/buildout$ wget <a href="http://downloads.buildout.org/2/bootstrap.py" target="_blank" rel="external">http://downloads.buildout.org/2/bootstrap.py</a><br>然后创建一个Buildout的配置文件:</p>
+<p>~/Projects/buildout$ touch buildout.cfg<br>运行bootstrap.py来生成Buildout相关的文件和目录:</p>
+<p>~/Projects/buildout$ python bootstrap.py<br>Creating directory ‘/Users/Eric/Projects/buildout/bin’.<br>Creating directory ‘/Users/Eric/Projects/buildout/parts’.<br>Creating directory ‘/Users/Eric/Projects/buildout/eggs’.<br>Creating directory ‘/Users/Eric/Projects/buildout/develop-eggs’.<br>Generated script ‘/Users/Eric/Projects/buildout/bin/buildout’.<br>从上面可以看出，创建了目录bin，parts，eggs，develop-eggs，在bin目录下生成了buildout脚本:</p>
+<p>bin目录用来存放生成的脚本文件<br>parts目录存放生成的数据，大多用不上<br>develop-eggs 存放指向开发目录的链接文件。和buildout.cfg中develop选项相关<br>eggs 是存放从网络上下载下来的egg包。这些包一般在buildout.cfg中的egg选项里定义<br>把Python和Pyramid集成进来<br>配置Buildout</p>
+<p>~/Projects/buildout$ vim buildout.cfg<br>[buildout]</p>
+<h1 id="每个buildout都要有一个parts列表，也可以为空。"><a href="#每个buildout都要有一个parts列表，也可以为空。" class="headerlink" title="每个buildout都要有一个parts列表，也可以为空。"></a>每个buildout都要有一个parts列表，也可以为空。</h1><h1 id="parts用来指定构建什么。如果parts中指定的段中还有parts的话，会递归构建。"><a href="#parts用来指定构建什么。如果parts中指定的段中还有parts的话，会递归构建。" class="headerlink" title="parts用来指定构建什么。如果parts中指定的段中还有parts的话，会递归构建。"></a>parts用来指定构建什么。如果parts中指定的段中还有parts的话，会递归构建。</h1><p>parts = tools</p>
+<p>[tools]</p>
+<h1 id="每一段都要指定一个recipe-recipe包含python的代码，用来安装这一段"><a href="#每一段都要指定一个recipe-recipe包含python的代码，用来安装这一段" class="headerlink" title="每一段都要指定一个recipe, recipe包含python的代码，用来安装这一段,"></a>每一段都要指定一个recipe, recipe包含python的代码，用来安装这一段,</h1><h1 id="zc-recipe-egg就是把一些把下面的egg安装到eggs目录中"><a href="#zc-recipe-egg就是把一些把下面的egg安装到eggs目录中" class="headerlink" title="zc.recipe.egg就是把一些把下面的egg安装到eggs目录中"></a>zc.recipe.egg就是把一些把下面的egg安装到eggs目录中</h1><p>recipe = zc.recipe.egg</p>
+<h1 id="定义python解释器"><a href="#定义python解释器" class="headerlink" title="定义python解释器"></a>定义python解释器</h1><p>interpreter = python</p>
+<h1 id="需要安装的egg"><a href="#需要安装的egg" class="headerlink" title="需要安装的egg"></a>需要安装的egg</h1><p>eggs =<br>    pyramid<br>执行buildout命令来构建一下, 这将会把Pyramid集成进来:</p>
+<p>~/Projects/buildout$ bin/buildout<br>用buildout来构建项目<br>现在可以创建Pyramid应用了:</p>
+<p>~/Projects/buildout$ bin/pcreate -t starter myproject<br>配置一下Buildout:</p>
+<p>~/Projects/buildout$ vim buildout.cfg<br>[buildout]<br>parts =<br>    tools<br>    apps<br>develop = myproject</p>
+<p>[tools]<br>recipe = zc.recipe.egg<br>interpreter = python<br>eggs =<br>    pyramid</p>
+<p>[apps]<br>recipe = zc.recipe.egg<br>eggs = myproject<br>再次运行一下buildout:</p>
+<p>~/Projects/buildout$ bin/buildout<br>现在可以再buildout的环境中启动myproject了:</p>
+<p>~/Projects/buildout$ bin/pserve myproject/development.ini<br>Starting server in PID 40619.<br>serving on <a href="http://0.0.0.0:6543" target="_blank" rel="external">http://0.0.0.0:6543</a><br>最佳实践/Tips</p>
+<ol>
+<li>固化egg的版本<br>把所有的版本信息写到[versions]里面:</li>
+</ol>
+<p>extends = versions.cfg<br>versions = versions<br>show-picked-versions = true</p>
+<p>配置中的“show-picked-versions = true “会在运行buildout的时候把所有的版本打印出来, 把它写到”versions.cfg”中就可以固化了:</p>
+<p>[versions]<br>Chameleon = 2.11<br>Mako = 0.7.3<br>MarkupSafe = 0.15<br>PasteDeploy = 1.5.0<br>WebOb = 1.2.3<br>distribute = 0.6.35<br>repoze.lru = 0.6<br>translationstring = 1.1<br>venusian = 1.0a7<br>zc.buildout = 2.0.1<br>zc.recipe.egg = 2.0.0a3<br>zope.deprecation = 4.0.2<br>zope.interface = 4.0.5</p>
+<h1 id="Required-by"><a href="#Required-by" class="headerlink" title="Required by:"></a>Required by:</h1><h1 id="pyramid-debugtoolbar-1-0-4"><a href="#pyramid-debugtoolbar-1-0-4" class="headerlink" title="pyramid-debugtoolbar==1.0.4"></a>pyramid-debugtoolbar==1.0.4</h1><p>Pygments = 1.6</p>
+<h1 id="Required-by-1"><a href="#Required-by-1" class="headerlink" title="Required by:"></a>Required by:</h1><h1 id="myproject-0-0"><a href="#myproject-0-0" class="headerlink" title="myproject==0.0"></a>myproject==0.0</h1><p>pyramid = 1.4</p>
+<h1 id="Required-by-2"><a href="#Required-by-2" class="headerlink" title="Required by:"></a>Required by:</h1><h1 id="myproject-0-0-1"><a href="#myproject-0-0-1" class="headerlink" title="myproject==0.0"></a>myproject==0.0</h1><p>pyramid-debugtoolbar = 1.0.4</p>
+<h1 id="Required-by-3"><a href="#Required-by-3" class="headerlink" title="Required by:"></a>Required by:</h1><h1 id="myproject-0-0-2"><a href="#myproject-0-0-2" class="headerlink" title="myproject==0.0"></a>myproject==0.0</h1><p>waitress = 0.8.2</p>
+<ol>
+<li>使用mr.developer插件来组织大型的项目, 让开发更方便<br>[buildout]<br>…<br>extensions = mr.developer<br>…</li>
+<li>开发环境 VS 生产环境<br>我们可以创建多个配置文件, 比如把buildout.cfg作为生产环境的配置, 把develop的配置从buildout.cfg删除, 创建一个development.cfg作为开发环境的配置:</li>
+</ol>
+<p>[buildout]<br>extends = buildout.cfg<br>develop = myproject</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/23/supervisio/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/23/rabbitmq/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/05/23/buildout构建项目/"
+           data-title="" data-url="http://www.rhel.cc/2017/05/23/buildout构建项目/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xw819.com1.z0.glb.clouddn.com/RH_CertifiedArchitect_RGB.svg"
+               alt="kikiyou" />
+          <p class="site-author-name" itemprop="name">kikiyou</p>
+           
+              <p class="site-description motion-element" itemprop="description">越努力越幸运</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">204</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yewang15215" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.quora.com/profile/King-Yip-3" target="_blank" title="Quora">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Quora
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/wutongyip" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.douban.com/people/yewang15215/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.guokr.com/i/0121652172/" target="_blank" title="果壳">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  果壳
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/hellokingyip" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/KingYip15215" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/kingyip15215" target="_blank" title="新浪微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  新浪微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/sindresorhus/awesome" title="Awesome" target="_blank">Awesome</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#每个buildout都要有一个parts列表，也可以为空。"><span class="nav-number">1.</span> <span class="nav-text">每个buildout都要有一个parts列表，也可以为空。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#parts用来指定构建什么。如果parts中指定的段中还有parts的话，会递归构建。"><span class="nav-number">2.</span> <span class="nav-text">parts用来指定构建什么。如果parts中指定的段中还有parts的话，会递归构建。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#每一段都要指定一个recipe-recipe包含python的代码，用来安装这一段"><span class="nav-number">3.</span> <span class="nav-text">每一段都要指定一个recipe, recipe包含python的代码，用来安装这一段,</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zc-recipe-egg就是把一些把下面的egg安装到eggs目录中"><span class="nav-number">4.</span> <span class="nav-text">zc.recipe.egg就是把一些把下面的egg安装到eggs目录中</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#定义python解释器"><span class="nav-number">5.</span> <span class="nav-text">定义python解释器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#需要安装的egg"><span class="nav-number">6.</span> <span class="nav-text">需要安装的egg</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Required-by"><span class="nav-number">7.</span> <span class="nav-text">Required by:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pyramid-debugtoolbar-1-0-4"><span class="nav-number">8.</span> <span class="nav-text">pyramid-debugtoolbar==1.0.4</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Required-by-1"><span class="nav-number">9.</span> <span class="nav-text">Required by:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#myproject-0-0"><span class="nav-number">10.</span> <span class="nav-text">myproject==0.0</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Required-by-2"><span class="nav-number">11.</span> <span class="nav-text">Required by:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#myproject-0-0-1"><span class="nav-number">12.</span> <span class="nav-text">myproject==0.0</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Required-by-3"><span class="nav-number">13.</span> <span class="nav-text">Required by:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#myproject-0-0-2"><span class="nav-number">14.</span> <span class="nav-text">myproject==0.0</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kikiyou</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"liveandlearn"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
